@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActivityController;
 
-
+Route::get('/', function () {
+    return redirect('/login');
+});
 /*
 |--------------------------------------------------------------------------
 | LOGIN PAGE
