@@ -14,6 +14,11 @@ Route::get('/', function () {
 | LOGIN PAGE
 |--------------------------------------------------------------------------
 */
+Route::get('/migrate', function () {
+    Artisan::call('migrate --force');
+
+    return "Migration done";
+});
 
 Route::post('/activities', [ActivityController::class, 'store'])
     ->middleware('admin.auth');
