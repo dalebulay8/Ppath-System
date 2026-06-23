@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PPATH Portal</title>
-
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
 <style>
     body {
