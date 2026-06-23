@@ -451,9 +451,10 @@ if (!title || !date || !author) {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
         },
-        body: JSON.stringify({
+   body: JSON.stringify({
     title: title,
-    date: date
+    date: date,
+    author: author
 })
     })  
     .then(res => res.json())
