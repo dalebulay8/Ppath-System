@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>PPATH Portal</title>
-<link rel="icon" type="image/png" href="{{ asset('svg.png') }}">
+    <title><link rel="icon" type="image/png" href="{{ asset('svg.png') }}"> PPATH Portal</title>
+
 
 <style>
     body {
