@@ -114,9 +114,7 @@
 
 
  <div style="text-align:center;">
-    <img src="/ppa1.png"
-         alt="PPATH Logo"
-         style="width:150px; height:auto;">
+  <img src="/ppa1.png" alt="PPATH Logo" style="width:250px; height:auto;">
 </div>
 
 
