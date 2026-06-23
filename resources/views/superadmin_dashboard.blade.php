@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Super Admin Dashboard</title>
-    <link rel="icon" type="image/png" href="{{ asset('svg.png') }}">
+    <link rel="icon" href="/svg.png?v=3">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
