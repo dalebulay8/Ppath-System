@@ -83,19 +83,21 @@ function onScanSuccess(decodedText) {
 
 })
 
-    .then(data => {
+   .then(data => {
 
-        console.log(data);
+    console.log(data);
 
-        if(data.success){
+    if(data.success){
 
-            alert('Attendance Recorded Successfully');
+        alert('Attendance Recorded Successfully');
 
-        }else{
+    }else{
 
-            alert('Failed to save.');
+        alert(data.message);
 
-        }
+    }
+
+
 
     })
 
