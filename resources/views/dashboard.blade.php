@@ -219,17 +219,35 @@
 </div>
 <br>
 <div class="grid grid-cols-3 gap-4 mb-6">
-    <div class="bg-blue-50 p-4 rounded">
-        Total: 0
-    </div>
+  @php
 
-    <div class="bg-green-50 p-4 rounded">
-        Male: 0
-    </div>
+$total = $attendees->where('activity_id',$activity->id)->count();
 
-    <div class="bg-purple-50 p-4 rounded">
-        Female: 0
-    </div>
+$male = $attendees
+            ->where('activity_id',$activity->id)
+            ->where('gender','MALE')
+            ->count();
+
+$female = $attendees
+            ->where('activity_id',$activity->id)
+            ->where('gender','FEMALE')
+            ->count();
+
+@endphp
+
+
+
+<div class="bg-blue-50 p-4 rounded">
+    Total: {{ $total }}
+</div>
+
+<div class="bg-green-50 p-4 rounded">
+    Male: {{ $male }}
+</div>
+
+<div class="bg-purple-50 p-4 rounded">
+    Female: {{ $female }}
+</div>
 </div>
             <table class="w-full border attendance-table">
                 <thead>
