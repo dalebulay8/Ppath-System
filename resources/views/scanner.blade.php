@@ -31,69 +31,90 @@
 
     <script>
 
-    function onScanSuccess(decodedText) {
+function onScanSuccess(decodedText) {
 
-        let activity_id = document.getElementById('activity_id').value;
+    // Show what was scanned
+    alert("Scanned: " + decodedText);
 
-        let data = decodedText.split('|');
+    let activity_id = document.getElementById('activity_id').value;
 
-        let name = data[0];
-        let gender = data[1];
+    let data = decodedText.split('|');
 
+    // Check if QR format is correct
+    if(data.length < 2){
+        alert("Invalid QR Format!\nExpected: Name|Gender");
+        return;
+    }
 
-        fetch('/scanner/save', {
+    let name = data[0].trim();
+    let gender = data[1].trim();
 
-            method: 'POST',
+    fetch('/scanner/save', {
 
-            headers: {
+        method: 'POST',
 
-                'Content-Type': 'application/json',
+        headers: {
 
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            'Content-Type': 'application/json',
 
-            },
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
 
-            body: JSON.stringify({
+        },
 
-                activity_id: activity_id,
-                name: name,
-                gender: gender
+        body: JSON.stringify({
 
-            })
+            activity_id: activity_id,
+            name: name,
+            gender: gender
 
         })
 
-        .then(response => response.json())
+    })
 
-        .then(data => {
+    .then(response => response.json())
 
-            if(data.success){
+    .then(data => {
 
-                alert('Attendance Recorded Successfully');
+        console.log(data);
 
-            }
+        if(data.success){
 
-        });
+            alert('Attendance Recorded Successfully');
 
-    }
+        }else{
 
+            alert('Failed to save.');
 
-
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-
-        "reader",
-
-        {
-            fps: 10,
-            qrbox: 250
         }
 
-    );
+    })
+
+    .catch(error => {
+
+        console.log(error);
+
+        alert('Error saving attendance.');
+
+    });
+
+}
 
 
-    html5QrcodeScanner.render(onScanSuccess);
 
-    </script>
+let html5QrcodeScanner = new Html5QrcodeScanner(
 
+    "reader",
+
+    {
+        fps: 10,
+        qrbox: 250
+    }
+
+);
+
+
+html5QrcodeScanner.render(onScanSuccess);
+
+</script>
 </body>
 </html>
