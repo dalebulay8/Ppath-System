@@ -5,9 +5,22 @@
 </head>
 <body>
 
-    <h1>PPATH QR Scanner</h1>
+   <h1>PPATH QR Scanner</h1>
 
-    <p>Scanner page created successfully.</p>
+<h3>Select Attendance Table</h3>
 
+<select>
+
+@foreach($activities as $activity)
+
+<option value="{{ $activity->id }}">
+
+{{ $activity->title }}
+
+</option>
+
+@endforeach
+
+</select>
 </body>
 </html>
