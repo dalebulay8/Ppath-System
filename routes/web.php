@@ -192,8 +192,8 @@ Route::post('/scanner/save', function (Request $request) {
 
             'name' => $request->name,
             'gender' => $request->gender,
-            'age' => null,
-            'category' => null,
+            'age' => 0,
+            'category' => 'N/A',
             'activity_id' => $request->activity_id
 
         ]);
