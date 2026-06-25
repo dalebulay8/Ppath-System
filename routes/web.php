@@ -188,23 +188,16 @@ Route::post('/scanner/save', function (Request $request) {
 
     DB::table('attendees')->insert([
 
-        'activity_id' => $request->activity_id,
-
         'name' => $request->name,
-
         'gender' => $request->gender,
-
-        'created_at' => now(),
-
-        'updated_at' => now()
+        'age' => null,
+        'category' => null,
+        'activity_id' => $request->activity_id
 
     ]);
 
-
     return response()->json([
-
         'success' => true
-
     ]);
 
 });
