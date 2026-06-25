@@ -4,45 +4,45 @@
     <title>PPATH QR Scanner</title>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
-
 </head>
+
 <body>
 
-    <h1>PPATH QR Scanner</h1>
+<h1>PPATH QR Scanner</h1>
 
-    <h3>Select Attendance Table</h3>
+<h3>Select Attendance Table</h3>
 
-    <select id="activity_id">
+<select id="activity_id">
+    @foreach($activities as $activity)
+        <option value="{{ $activity->id }}">
+            {{ $activity->title }}
+        </option>
+    @endforeach
+</select>
 
-        @foreach($activities as $activity)
+<br><br>
 
-            <option value="{{ $activity->id }}">
-                {{ $activity->title }}
-            </option>
+<div id="reader"></div>
 
-        @endforeach
-
-    </select>
-
-    <br><br>
-
-    <div id="reader"></div>
-
-
-    <script>
+<script>
+let isScanning = false;
 
 function onScanSuccess(decodedText) {
 
-    // Show what was scanned
-    alert("Scanned: " + decodedText);
+    // Prevent multiple triggers
+    if (isScanning) return;
+    isScanning = true;
+
+    console.log("Scanned:", decodedText);
 
     let activity_id = document.getElementById('activity_id').value;
 
-    let data = decodedText.split(/[\/|]/);
+    // Expected format: Name|Gender
+    let data = decodedText.split("|");
 
-    // Check if QR format is correct
-    if(data.length !== 2){
+    if (data.length !== 2) {
         alert("Invalid QR Format!\nExpected: Name|Gender");
+        resetScanner();
         return;
     }
 
@@ -50,99 +50,57 @@ function onScanSuccess(decodedText) {
     let gender = data[1].trim();
 
     fetch('/scanner/save', {
-
         method: 'POST',
-
         headers: {
-
             'Content-Type': 'application/json',
-
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
-
         },
-
         body: JSON.stringify({
-
             activity_id: activity_id,
             name: name,
             gender: gender
-
         })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        console.log(data);
+
+        if (data.success) {
+            alert('Attendance Recorded Successfully');
+        } else {
+            alert(data.message || 'Failed to record attendance');
+        }
 
     })
-
-  .then(async response => {
-
-    let text = await response.text();
-
-    console.log(text);
-
-    alert(text);
-
-    return JSON.parse(text);
-
-})
-
-.then(data => {
-
-    console.log(data);
-
-    if(data.success){
-
-        alert('Attendance Recorded Successfully');
-
-    }else{
-
-        alert(data.message);
-
-    }
-
-})
-
-   .then(data => {
-
-    console.log(data);
-
-    if(data.success){
-
-        alert('Attendance Recorded Successfully');
-
-    }else{
-
-        alert(data.message);
-
-    }
-
-
-
-    })
-
     .catch(error => {
-
-    console.log(error);
-
-    alert("Error:\n" + error);
-
-});
-
+        console.log(error);
+        alert("Error:\n" + error);
+    })
+    .finally(() => {
+        resetScanner();
+    });
 }
 
+// Reset scanner lock (prevents spam scanning)
+function resetScanner() {
+    setTimeout(() => {
+        isScanning = false;
+    }, 2000);
+}
 
-
+// QR Scanner init
 let html5QrcodeScanner = new Html5QrcodeScanner(
-
     "reader",
-
     {
         fps: 10,
         qrbox: 250
     }
-
 );
-
 
 html5QrcodeScanner.render(onScanSuccess);
 
 </script>
+
 </body>
 </html>
