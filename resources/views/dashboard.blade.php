@@ -581,7 +581,7 @@ titleSection.innerHTML = `
 }
 
 </script>
-      <script>
+     <script>
 
 async function loadAttendance(activityId) {
 
@@ -614,6 +614,7 @@ async function loadAttendance(activityId) {
                 });
 
             } else {
+
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="5" class="text-center text-gray-400 py-6">
@@ -632,13 +633,13 @@ async function loadAttendance(activityId) {
         if (maleBox) maleBox.innerHTML = `Male: ${data.male}`;
         if (femaleBox) femaleBox.innerHTML = `Female: ${data.female}`;
 
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error("Error:", err);
     }
 }
 
 
-// 🚀 SINGLE CONTROL LOOP (IMPORTANT FIX)
+// ✅ STEP 2 — INITIAL LOAD (IMPORTANT FIX)
 function initLiveUpdate() {
 
     @foreach($activities as $activity)
@@ -647,10 +648,14 @@ function initLiveUpdate() {
 
 }
 
-// run immediately
-initLiveUpdate();
 
-// run continuously
+// ✅ STEP 3 — RUN ON PAGE LOAD
+window.addEventListener("load", function () {
+    initLiveUpdate();
+});
+
+
+// ✅ STEP 4 — AUTO REFRESH EVERY 2 SECONDS
 setInterval(initLiveUpdate, 2000);
 
 </script>
