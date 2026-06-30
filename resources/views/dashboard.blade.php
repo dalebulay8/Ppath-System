@@ -577,6 +577,7 @@ titleSection.innerHTML = `
     timer: 1500,
     showConfirmButton: false
 });
+        window.location.reload();
     });
 }
 </script>
