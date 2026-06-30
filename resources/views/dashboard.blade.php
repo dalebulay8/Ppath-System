@@ -639,7 +639,11 @@ async function loadAttendance(activityId) {
         console.error("Live update error:", error);
     }
 }
+<script>
 
+@foreach($activities as $activity)
+    loadAttendance({{ $activity->id }});
+@endforeach
 
 // RUN EVERY 2 SECONDS
 setInterval(() => {
