@@ -221,11 +221,11 @@ Route::get('/attendance/live/{activity}', function ($activity) {
         ->where('activity_id', $activity)
         ->get();
 
-    return response()->json([
-        'attendees' => $attendees,
-        'total' => $attendees->count(),
-        'male' => $attendees->where('gender', 'MALE')->count(),
-        'female' => $attendees->where('gender', 'FEMALE')->count()
-    ]);
+   return response()->json([
+    'attendees' => $attendees,
+    'total' => $attendees->count(),
+    'male' => $attendees->where('gender', 'MALE')->count(),
+    'female' => $attendees->where('gender', 'FEMALE')->count()
+]);
 
 });
