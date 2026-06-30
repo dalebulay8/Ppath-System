@@ -639,8 +639,9 @@ async function loadAttendance(activityId) {
         console.error("Live update error:", error);
     }
 }
-<script>
 
+
+// RUN EVERY 2 SECONDS
 setInterval(() => {
 
     @foreach($activities as $activity)
@@ -648,6 +649,7 @@ setInterval(() => {
     @endforeach
 
 }, 2000);
+
 </script>
     
     </body>
