@@ -585,33 +585,7 @@ titleSection.innerHTML = `
 }
 
 </script>
-        <script>
-            function openScanner(event) {
-    event.preventDefault();
-
-    fetch('/scanner/token', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        if (data.token) {
-            window.open('/scanner?token=' + data.token, '_blank');
-        } else {
-            alert('Failed to open scanner');
-        }
-
-    })
-    .catch(err => {
-        console.error(err);
-        alert('Error opening scanner');
-    });
-}
-        </script>
+       
     
     </body>
     </html>
