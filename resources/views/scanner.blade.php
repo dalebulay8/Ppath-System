@@ -80,13 +80,21 @@
             box-shadow:0 0 0 3px rgba(31,78,121,.15);
         }
 
-        #reader{
-            border:1px solid #dee2e6;
-            border-radius:10px;
-            background:#fafafa;
-            padding:15px;
-        }
-
+   #reader{
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    background: #fff;
+    overflow: hidden;
+}
+#reader video,
+#reader canvas{
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+}
         /* Hide image scan option */
         #reader__filescan_region,
         #reader__dashboard_section_swaplink{
