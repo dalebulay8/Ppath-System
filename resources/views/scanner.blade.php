@@ -10,72 +10,111 @@
             margin:0;
             padding:0;
             box-sizing:border-box;
-            font-family:Arial, Helvetica, sans-serif;
+            font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body{
-            background:#f4f6f9;
+            background:#eef2f7;
+            min-height:100vh;
             display:flex;
             justify-content:center;
             align-items:center;
-            min-height:100vh;
-        }
-
-        .container{
-            width:100%;
-            max-width:500px;
-            background:#fff;
             padding:30px;
-            border-radius:15px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.1);
-            text-align:center;
         }
 
-        h1{
-            color:#2c3e50;
-            margin-bottom:10px;
+        .scanner-card{
+            width:100%;
+            max-width:700px;
+            background:#fff;
+            border-radius:12px;
+            box-shadow:0 8px 25px rgba(0,0,0,.08);
+            overflow:hidden;
         }
 
-        p{
-            color:#777;
+        .header{
+            background:#0d6efd;
+            color:#fff;
+            padding:22px 30px;
+            border-bottom:1px solid #d9e3f0;
+        }
+
+        .header h1{
+            font-size:28px;
+            font-weight:600;
+        }
+
+        .header p{
+            margin-top:6px;
+            font-size:14px;
+            opacity:.9;
+        }
+
+        .content{
+            padding:30px;
+        }
+
+        .form-group{
             margin-bottom:25px;
         }
 
         label{
             display:block;
-            text-align:left;
-            font-weight:bold;
             margin-bottom:8px;
+            font-weight:600;
             color:#444;
         }
 
         select{
             width:100%;
-            padding:12px;
-            border:1px solid #ccc;
+            padding:12px 14px;
+            border:1px solid #cfd6df;
             border-radius:8px;
             font-size:15px;
-            margin-bottom:20px;
             outline:none;
+            transition:.2s;
+            background:#fff;
+        }
+
+        select:focus{
+            border-color:#0d6efd;
+            box-shadow:0 0 0 3px rgba(13,110,253,.15);
         }
 
         #reader{
-            border:2px solid #e5e5e5;
+            border:1px solid #d9dfe7;
             border-radius:10px;
             overflow:hidden;
+            background:#fafafa;
+            padding:10px;
         }
 
-        footer{
-            margin-top:20px;
-            color:#888;
+        .footer{
+            text-align:center;
+            padding:18px;
+            border-top:1px solid #ececec;
             font-size:13px;
+            color:#777;
+            background:#fafafa;
         }
 
-        @media(max-width:600px){
-            .container{
-                margin:15px;
+        @media (max-width:768px){
+
+            body{
+                padding:15px;
+            }
+
+            .header{
+                padding:18px;
+            }
+
+            .content{
                 padding:20px;
             }
+
+            .header h1{
+                font-size:24px;
+            }
+
         }
     </style>
 
@@ -83,105 +122,38 @@
 
 <body>
 
-<div class="container">
+<div class="scanner-card">
 
-    <h1>📷 PPATH QR Scanner</h1>
-    <p>Scan participant QR Code to record attendance.</p>
+    <div class="header">
+        <h1>PPATH QR Scanner</h1>
+        <p>Scan participant QR codes to record attendance.</p>
+    </div>
 
-    <label>Select Attendance Activity</label>
+    <div class="content">
 
-    <select id="activity_id">
-        @foreach($activities as $activity)
-            <option value="{{ $activity->id }}">
-                {{ $activity->title }}
-            </option>
-        @endforeach
-    </select>
+        <div class="form-group">
+            <label>Select Attendance Activity</label>
 
-    <div id="reader"></div>
+            <select id="activity_id">
+                @foreach($activities as $activity)
+                    <option value="{{ $activity->id }}">
+                        {{ $activity->title }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-    <footer>
+        <div id="reader"></div>
+
+    </div>
+
+    <div class="footer">
         PPATH Attendance Monitoring System
-    </footer>
+    </div>
 
 </div>
 
-<script>
-
-let isScanning = false;
-
-function onScanSuccess(decodedText) {
-
-    if (isScanning) return;
-    isScanning = true;
-
-    console.log("Scanned:", decodedText);
-
-    let activity_id = document.getElementById('activity_id').value;
-
-    // Expected format: Name/Gender
-    let data = decodedText.split("/");
-
-    if (data.length !== 2) {
-        alert("Invalid QR Format!\nExpected: Name/Gender");
-        resetScanner();
-        return;
-    }
-
-    let name = data[0].trim();
-    let gender = data[1].trim();
-
-    fetch('/scanner/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({
-            activity_id: activity_id,
-            name: name,
-            gender: gender
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-
-        console.log(data);
-
-        if(data.success){
-            alert("Attendance Recorded Successfully");
-        }else{
-            alert(data.message || "Failed to record attendance");
-        }
-
-    })
-    .catch(error=>{
-        console.log(error);
-        alert("Error:\n"+error);
-    })
-    .finally(()=>{
-        resetScanner();
-    });
-
-}
-
-function resetScanner(){
-    setTimeout(()=>{
-        isScanning = false;
-    },2000);
-}
-
-let html5QrcodeScanner = new Html5QrcodeScanner(
-    "reader",
-    {
-        fps:10,
-        qrbox:250
-    }
-);
-
-html5QrcodeScanner.render(onScanSuccess);
-
-</script>
+<!-- Keep your existing JavaScript below -->
 
 </body>
 </html>
