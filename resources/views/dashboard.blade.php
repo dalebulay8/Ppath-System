@@ -238,15 +238,15 @@ $female = $attendees
 
 
 
-<div class="bg-blue-50 p-4 rounded">
+<div id="total-{{ $activity->id }}" class="bg-blue-50 p-4 rounded">
     Total: {{ $total }}
 </div>
 
-<div class="bg-green-50 p-4 rounded">
+<div id="male-{{ $activity->id }}" class="bg-green-50 p-4 rounded">
     Male: {{ $male }}
 </div>
 
-<div class="bg-purple-50 p-4 rounded">
+<div id="female-{{ $activity->id }}" class="bg-purple-50 p-4 rounded">
     Female: {{ $female }}
 </div>
 </div>
@@ -261,7 +261,7 @@ $female = $attendees
                     </tr>
                 </thead>
 
-              <tbody>
+             <tbody id="attendance-{{ $activity->id }}">
 
 @php
     $count = 1;
@@ -581,7 +581,76 @@ titleSection.innerHTML = `
 }
 
 </script>
-       
+       <script>
+
+async function loadAttendance(activityId) {
+
+    try {
+
+        const response = await fetch(`/attendance/live/${activityId}`);
+        const data = await response.json();
+
+        // 1. UPDATE TABLE
+        let tbody = document.getElementById(`attendance-${activityId}`);
+
+        if (tbody) {
+
+            tbody.innerHTML = "";
+
+            if (data.attendees.length > 0) {
+
+                let count = 1;
+
+                data.attendees.forEach(att => {
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${count++}</td>
+                            <td>${att.name}</td>
+                            <td>${att.gender}</td>
+                            <td>${att.age}</td>
+                            <td>${att.category}</td>
+                        </tr>
+                    `;
+                });
+
+            } else {
+
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-gray-400 py-6">
+                            No attendees yet
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // 2. UPDATE TOTAL
+        let totalBox = document.getElementById(`total-${activityId}`);
+        let maleBox = document.getElementById(`male-${activityId}`);
+        let femaleBox = document.getElementById(`female-${activityId}`);
+
+        if (totalBox) totalBox.innerHTML = `Total: ${data.total}`;
+        if (maleBox) maleBox.innerHTML = `Male: ${data.male}`;
+        if (femaleBox) femaleBox.innerHTML = `Female: ${data.female}`;
+
+    } catch (error) {
+        console.error("Live update error:", error);
+    }
+}
+
+
+// RUN EVERY 2 SECONDS
+setInterval(() => {
+
+    @foreach($activities as $activity)
+        loadAttendance({{ $activity->id }});
+    @endforeach
+
+}, 2000);
+
+</script>
     
     </body>
     </html>
