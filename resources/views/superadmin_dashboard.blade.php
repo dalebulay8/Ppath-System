@@ -249,7 +249,7 @@
             '{{ $admin->firstname }}',
             '{{ $admin->lastname }}',
             '{{ $admin->email }}',
-            '{{ $admin->status }}'
+            '{{ $admin->role }}'
         )"
         class="text-white px-3 py-1 rounded"
         style="background-color:#0E4C92;">
@@ -327,12 +327,12 @@
 
             <div class="mb-3">
 
-                <label>Status</label>
+                <label>Role</label>
 
-                <select
-                    id="edit_status"
-                    name="status"
-                    class="border w-full p-2 rounded">
+<select
+    id="edit_role"
+    name="role"
+    class="border w-full p-2 rounded">
 
                     <option value="admin">
                         Admin
@@ -411,31 +411,18 @@
     });
 
 }
-function toggleResetForm(id) {
-    const form = document.getElementById('reset-form-' + id);
 
-    if (form.classList.contains('hidden')) {
-        form.classList.remove('hidden');
-    } else {
-        form.classList.add('hidden');
-    }
-}
 </script>
 <script>
-    function openEditModal(id, firstname, lastname, email, status)
+function openEditModal(id, firstname, lastname, email, role)
 {
     document.getElementById('edit_id').value = id;
-
     document.getElementById('edit_firstname').value = firstname;
-
     document.getElementById('edit_lastname').value = lastname;
-
     document.getElementById('edit_email').value = email;
-
-    document.getElementById('edit_status').value = status;
+    document.getElementById('edit_role').value = role;
 
     document.getElementById('editModal').classList.remove('hidden');
-
     document.getElementById('editModal').classList.add('flex');
 }
 
