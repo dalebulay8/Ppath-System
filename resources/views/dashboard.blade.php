@@ -252,14 +252,12 @@ $female = $attendees
 </div>
             <table class="w-full border attendance-table">
                 <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Gender</th>
-                        <th>Age</th>
-                        <th>Category</th>
-                    </tr>
-                </thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Gender</th>
+    </tr>
+</thead>
 
              <tbody id="attendance-{{ $activity->id }}">
 
@@ -278,9 +276,7 @@ $female = $attendees
 
     <td>{{ $attendee->gender }}</td>
 
-    <td>{{ $attendee->age }}</td>
-
-    <td>{{ $attendee->category }}</td>
+   
 
 </tr>
 
@@ -288,11 +284,9 @@ $female = $attendees
 
 <tr>
 
-    <td colspan="5" class="text-center">
-
-        No attendees yet
-
-    </td>
+   <td colspan="3" class="text-center">
+    No attendees yet
+</td>
 
 </tr>
 
@@ -443,13 +437,12 @@ style="background-color: #0E1A24;">
                     <th>#</th>
                     <th>Name</th>
                     <th>Gender</th>
-                    <th>Age</th>
-                    <th>Category</th>
+                  
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="5" class="text-center text-gray-400 py-6">
+                    <td colspan="3" class="text-center text-gray-400 py-6">
                         No attendees yet
                     </td>
                 </tr>
@@ -609,8 +602,7 @@ async function loadAttendance(activityId) {
                             <td>${count++}</td>
                             <td>${att.name}</td>
                             <td>${att.gender}</td>
-                            <td>${att.age}</td>
-                            <td>${att.category}</td>
+                            
                         </tr>
                     `;
                 });
@@ -619,7 +611,7 @@ async function loadAttendance(activityId) {
 
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="text-center text-gray-400 py-6">
+                        <td colspan="3" class="text-center text-gray-400 py-6">
                             No attendees yet
                         </td>
                     </tr>
