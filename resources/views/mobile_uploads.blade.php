@@ -17,7 +17,6 @@
 <body class="bg-gray-100 pt-24">
 
 
-<!-- NAVBAR -->
 <nav class="fixed top-0 left-0 w-full border-b shadow-sm px-8 py-4 flex justify-between items-center z-50"
      style="background-color:#2F4B63;">
 
@@ -50,9 +49,7 @@
 
 
 
-
 <main class="max-w-6xl mx-auto mt-6 px-4">
-
 
 
 <div class="mb-8">
@@ -75,7 +72,6 @@
 @if($uploads->count() == 0)
 
 
-
 <div class="bg-white rounded-2xl shadow-sm p-8 text-center text-gray-400">
 
     No uploaded attendance yet.
@@ -84,9 +80,7 @@
 
 
 
-
 @else
-
 
 
 
@@ -94,24 +88,40 @@
 
 
 
-
-
 @foreach($uploads as $upload)
 
 
 
+@php
+
+$total = $upload->attendees->count();
+
+$male = $upload->attendees
+                ->where('gender','MALE')
+                ->count();
+
+$female = $upload->attendees
+                ->where('gender','FEMALE')
+                ->count();
+
+@endphp
 
 
-<div class="bg-white border rounded-2xl shadow-sm p-8">
+
+
+<div class="bg-white border rounded-2xl shadow-sm p-8 upload-card"
+
+data-title="{{ $upload->table_name }}"
+data-author="{{ $upload->author }}"
+data-total="{{ $total }}"
+data-male="{{ $male }}"
+data-female="{{ $female }}">
 
 
 
 
-
-<!-- HEADER -->
 
 <div class="flex justify-between items-center mb-5">
-
 
 
 <div>
@@ -146,8 +156,6 @@ Mobile Attendance Upload
 
 
 
-<!-- EXPORT BUTTONS -->
-
 <div class="flex gap-2">
 
 
@@ -158,7 +166,6 @@ style="background-color:#D8DEE4;">
 Export CSV
 
 </button>
-
 
 
 
@@ -175,39 +182,7 @@ Export Excel
 </div>
 
 
-
-
 </div>
-
-
-
-
-
-
-
-<!-- STATISTICS -->
-
-
-@php
-
-
-$total = $upload->attendees->count();
-
-
-
-$male = $upload->attendees
-                ->where('gender','MALE')
-                ->count();
-
-
-
-$female = $upload->attendees
-                ->where('gender','FEMALE')
-                ->count();
-
-
-
-@endphp
 
 
 
@@ -236,7 +211,6 @@ Total
 
 
 
-
 <div class="bg-green-50 p-4 rounded-lg">
 
 
@@ -253,7 +227,6 @@ Male
 
 
 </div>
-
 
 
 
@@ -284,12 +257,6 @@ Female
 
 
 
-
-
-
-
-<!-- TABLE -->
-
 <div class="overflow-x-auto">
 
 
@@ -298,14 +265,11 @@ Female
 
 <thead class="bg-gray-100">
 
-
 <tr>
-
 
 <th class="border p-3">
 #
 </th>
-
 
 
 <th class="border p-3">
@@ -313,25 +277,19 @@ Name
 </th>
 
 
-
 <th class="border p-3">
 Gender
 </th>
 
 
-
 </tr>
-
 
 </thead>
 
 
 
 
-
-
 <tbody>
-
 
 
 @php
@@ -340,50 +298,32 @@ $count = 1;
 
 
 
-
-
 @forelse($upload->attendees as $person)
-
 
 
 <tr>
 
 
 <td class="border p-3">
-
 {{ $count++ }}
-
 </td>
 
 
-
-
 <td class="border p-3">
-
 {{ $person->name }}
-
 </td>
-
-
 
 
 <td class="border p-3">
-
 {{ $person->gender }}
-
 </td>
-
-
 
 
 </tr>
 
 
 
-
-
 @empty
-
 
 
 <tr>
@@ -398,10 +338,7 @@ No attendees yet
 </tr>
 
 
-
 @endforelse
-
-
 
 
 
@@ -412,16 +349,11 @@ No attendees yet
 </table>
 
 
-
 </div>
 
 
 
-
-
 </div>
-
-
 
 
 
@@ -430,11 +362,7 @@ No attendees yet
 
 
 
-
-
 </div>
-
-
 
 
 
@@ -442,35 +370,105 @@ No attendees yet
 
 
 
-
-
 </main>
-
-
-
-
-
-
-
-
-
 <script>
 
 
 function exportExcel(button)
 {
 
-    const tableBlock = button.closest('.bg-white');
+    const card = button.closest('.upload-card');
 
-    const table = tableBlock.querySelector('table');
+    const table = card.querySelector('table');
+
+
+    const title = card.dataset.title;
+
+    const author = card.dataset.author;
+
+    const total = card.dataset.total;
+
+    const male = card.dataset.male;
+
+    const female = card.dataset.female;
 
 
 
-    const workbook = XLSX.utils.table_to_book(table, {
 
-        sheet:"Mobile Upload"
+    let data = [];
+
+
+    // REPORT HEADER
+
+    data.push(["PPATH Mobile Attendance Report"]);
+
+    data.push(["Activity", title]);
+
+    data.push(["Uploaded By", author]);
+
+
+    data.push([]);
+
+
+    // SUMMARY
+
+    data.push(["Attendance Summary"]);
+
+    data.push(["Total", total]);
+
+    data.push(["Male", male]);
+
+    data.push(["Female", female]);
+
+
+    data.push([]);
+
+
+    // ATTENDEE TABLE
+
+    const rows = table.querySelectorAll("tr");
+
+
+    rows.forEach(row => {
+
+
+        let rowData = [];
+
+
+        row.querySelectorAll("th, td").forEach(cell => {
+
+
+            rowData.push(
+                cell.innerText.trim()
+            );
+
+
+        });
+
+
+        data.push(rowData);
+
 
     });
+
+
+
+
+
+    const worksheet = XLSX.utils.aoa_to_sheet(data);
+
+
+
+    const workbook = XLSX.utils.book_new();
+
+
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Attendance"
+    );
+
 
 
 
@@ -478,12 +476,13 @@ function exportExcel(button)
 
         workbook,
 
-        "PPATH_Mobile_Attendance.xlsx"
+        title + "_Attendance.xlsx"
 
     );
 
-
 }
+
+
 
 
 
@@ -495,14 +494,28 @@ function exportCSV(button)
 {
 
 
-    const tableBlock = button.closest('.bg-white');
+    const card = button.closest('.upload-card');
 
 
-    const table = tableBlock.querySelector('table');
+    const table = card.querySelector('table');
 
 
 
-    const rows = table.querySelectorAll('tr');
+    const title = card.dataset.title;
+
+
+    const author = card.dataset.author;
+
+
+    const total = card.dataset.total;
+
+
+    const male = card.dataset.male;
+
+
+    const female = card.dataset.female;
+
+
 
 
 
@@ -512,41 +525,95 @@ function exportCSV(button)
 
 
 
+    // REPORT HEADER
+
+    csv.push(
+        `"PPATH Mobile Attendance Report"`
+    );
+
+
+    csv.push(
+        `"Activity","${title}"`
+    );
+
+
+    csv.push(
+        `"Uploaded By","${author}"`
+    );
+
+
+
+    csv.push("");
+
+
+
+
+
+    // SUMMARY
+
+    csv.push(
+        `"Attendance Summary"`
+    );
+
+
+    csv.push(
+        `"Total","${total}"`
+    );
+
+
+    csv.push(
+        `"Male","${male}"`
+    );
+
+
+    csv.push(
+        `"Female","${female}"`
+    );
+
+
+
+    csv.push("");
+
+
+
+
+
+
+
+    // TABLE DATA
+
+    const rows = table.querySelectorAll("tr");
+
+
+
     rows.forEach(row => {
-
-
-
-        const cols = row.querySelectorAll('th, td');
-
 
 
         let rowData = [];
 
 
 
-
-        cols.forEach(col => {
-
+        row.querySelectorAll("th, td").forEach(cell => {
 
 
             rowData.push(
 
-                `"${col.innerText.trim()}"`
+                `"${cell.innerText.trim()}"`
 
             );
-
 
 
         });
 
 
 
-
-        csv.push(rowData.join(","));
-
+        csv.push(
+            rowData.join(",")
+        );
 
 
     });
+
 
 
 
@@ -558,7 +625,9 @@ function exportCSV(button)
 
         [csv.join("\n")],
 
-        {type:"text/csv"}
+        {
+            type:"text/csv"
+        }
 
     );
 
@@ -580,7 +649,7 @@ function exportCSV(button)
 
 
 
-    a.download = "PPATH_Mobile_Attendance.csv";
+    a.download = title + "_Attendance.csv";
 
 
 
@@ -600,8 +669,6 @@ function exportCSV(button)
 
 
 
-
-
     URL.revokeObjectURL(url);
 
 
@@ -610,9 +677,7 @@ function exportCSV(button)
 
 
 
-
 </script>
-
 
 
 </body>
