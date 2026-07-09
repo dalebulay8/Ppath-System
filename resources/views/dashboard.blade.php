@@ -395,17 +395,26 @@ Female: {{ $female }}
 
 <!-- ATTENDANCE TABLE -->
 
-<table class="w-full border attendance-table">
+<table class="w-full border attendance-table table-fixed">
 
 <thead class="bg-gray-100">
 
 <tr>
 
-<th>#</th>
+<th class="w-16 border p-3">
+#
+</th>
 
-<th>Name</th>
 
-<th>Gender</th>
+<th class="w-96 border p-3">
+Name
+</th>
+
+
+<th class="w-32 border p-3">
+Gender
+</th>
+
 
 </tr>
 
@@ -440,10 +449,8 @@ $count = 1;
 
 
 
-<td>
-
-{{ $attendee->name }}
-
+<td class="border p-3 break-words">
+    {{ $attendee->name }}
 </td>
 
 
