@@ -230,6 +230,8 @@ Route::get('/attendance/live/{activity}', function ($activity) {
 ]);
 
 });
-Route::get('/mobile-uploads', function () {
-    return view('mobile_uploads');
-});
+use App\Http\Controllers\MobileUploadController;
+
+
+Route::get('/mobile-uploads',
+[MobileUploadController::class,'index']);
