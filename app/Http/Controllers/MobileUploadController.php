@@ -9,14 +9,14 @@ use App\Models\MobileUploadAttendee;
 class MobileUploadController extends Controller
 {
 
-    public function index()
+public function index()
 {
     $uploads = MobileUpload::with('attendees')
         ->orderBy('created_at','desc')
         ->get();
 
 
-    return view('mobile_uploads', compact('uploads'));
+    dd($uploads);
 }
 
 
