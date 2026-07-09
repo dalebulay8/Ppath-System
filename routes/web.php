@@ -234,7 +234,10 @@ use App\Http\Controllers\MobileUploadController;
 
 
 Route::get('/mobile-uploads',
-[MobileUploadController::class,'index']);
+[MobileUploadController::class,'index'])
+->middleware('admin.auth');
+
 
 Route::get('/mobile-uploads/delete/{id}', 
-[MobileUploadController::class,'delete']);
+[MobileUploadController::class,'delete'])
+->middleware('admin.auth');
