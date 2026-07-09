@@ -17,7 +17,8 @@ class MobileUploadAttendee extends Model
     {
         return $this->belongsTo(
             MobileUpload::class,
-            'mobile_upload_id'
+            'mobile_upload_id',
+            'id'
         );
     }
 }
