@@ -15,11 +15,7 @@ class MobileUploadController extends Controller
             ->orderBy('created_at','desc')
             ->get();
 
-
-        return view(
-            'mobile_uploads',
-            compact('uploads')
-        );
+        return view('mobile_uploads', compact('uploads'));
     }
 
 
@@ -29,20 +25,18 @@ class MobileUploadController extends Controller
 
         $request->validate([
 
-            'table_name'=>'required|string',
+            'table_name' => 'required|string',
 
-            'attendees'=>'required|array'
+            'attendees' => 'required|array'
 
         ]);
-
 
 
         $upload = MobileUpload::create([
 
-            'table_name'=>$request->table_name
+            'table_name' => $request->table_name
 
         ]);
-
 
 
         foreach($request->attendees as $person)
@@ -50,23 +44,22 @@ class MobileUploadController extends Controller
 
             MobileUploadAttendee::create([
 
-                'mobile_upload_id'=>$upload->id,
+                'mobile_upload_id' => $upload->id,
 
-                'name'=>$person['name'],
+                'name' => $person['name'],
 
-                'gender'=>$person['gender']
+                'gender' => $person['gender']
 
             ]);
 
         }
 
 
-
         return response()->json([
 
-            'success'=>true,
+            'success' => true,
 
-            'message'=>'Upload successful'
+            'message' => 'Upload successful'
 
         ]);
 
