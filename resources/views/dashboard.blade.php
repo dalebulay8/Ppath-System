@@ -1215,13 +1215,30 @@ data.push(rowData);
 
 
 
-const worksheet =
-XLSX.utils.aoa_to_sheet(data);
+const worksheet = XLSX.utils.aoa_to_sheet(data);
 
+// --- ADD THIS PIECE OF CODE TO AUTO-FIT COLUMNS ---
+const maxCols = data.reduce((max, row) => Math.max(max, row.length), 0);
+const colWidths = [];
 
+for (let i = 0; i < maxCols; i++) {
+    let maxLength = 10; // set a base minimum width
+    data.forEach(row => {
+        if (row[i] !== undefined && row[i] !== null) {
+            const cellLength = row[i].toString().length;
+            if (cellLength > maxLength) {
+                maxLength = cellLength;
+            }
+        }
+    });
+    // Add a little padding (e.g., +3 characters) so text isn't flush with the border
+    colWidths.push({ wch: maxLength + 3 }); 
+}
 
-const workbook =
-XLSX.utils.book_new();
+worksheet['!cols'] = colWidths;
+// --------------------------------------------------
+
+const workbook = XLSX.utils.book_new();
 
 
 
