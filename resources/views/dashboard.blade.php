@@ -184,11 +184,12 @@
       
 </div>
     <div class="max-w-6xl mx-auto mt-6 flex justify-end px-4">
- <a href="/mobile-uploads"
-       class="text-white hover:text-gray-300 font-semibold">
+    <a href="/mobile-uploads"
+       class="text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+       style="background-color: #6F8DA6;">
         Mobile Uploads
     </a>
-        </div>
+</div>
 <main>
    <div id="tablesContainer" class="space-y-8">
     
