@@ -1,88 +1,140 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile Uploads</title>
 
-namespace App\Http\Controllers;
+    <script src="https://cdn.tailwindcss.com"></script>
 
-use Illuminate\Http\Request;
-use App\Models\MobileUpload;
-use App\Models\MobileUploadAttendee;
+</head>
 
-class MobileUploadController extends Controller
-{
-    /**
-     * Display all uploaded attendance tables.
-     */
-    public function index()
-    {
-        $uploads = MobileUpload::with('attendees')
-            ->orderBy('created_at', 'desc')
-            ->get();
+<body class="bg-gray-100 min-h-screen">
 
-        return view('mobile_uploads', compact('uploads'));
-    }
+<div class="max-w-6xl mx-auto py-8 px-5">
 
-    /**
-     * Receive upload from MIT App.
-     */
-    public function upload(Request $request)
-    {
-        try {
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Mobile Uploaded Attendance
+    </h1>
 
-            // Receive JSON from MIT App
-            $title   = trim($request->input('title'));
-            $content = trim($request->input('content'));
-            $author  = trim($request->input('author', 'Anonymous'));
 
-            // Validate required fields
-            if (empty($title) || empty($content)) {
-                return response("ERROR: Missing title or content", 400)
-                    ->header("Content-Type", "text/plain");
-            }
+    @forelse($uploads as $upload)
 
-            // Create one upload record
-            $upload = MobileUpload::create([
-                'table_name' => $title,
-                'author'     => $author
-            ]);
+    <!-- Separate Upload Card -->
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
 
-            // Split uploaded text into lines
-            $lines = preg_split("/\r\n|\n|\r/", $content);
 
-            foreach ($lines as $line) {
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-5">
 
-                $line = trim($line);
+            <div>
+                <h2 class="text-xl font-bold text-gray-700">
+                    {{ $upload->table_name }}
+                </h2>
 
-                if ($line === "") {
-                    continue;
-                }
+                <p class="text-sm text-gray-500 mt-1">
+                    Uploaded by: {{ $upload->author }}
+                </p>
 
-                // Expected format:
-                // Juan Dela Cruz/MALE
-                $parts = explode("/", $line);
+                <p class="text-sm text-gray-400">
+                    {{ $upload->created_at->format('F d, Y h:i A') }}
+                </p>
+            </div>
 
-                $name   = trim($parts[0] ?? "");
-                $gender = trim($parts[1] ?? "");
 
-                if ($name !== "") {
+            <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold">
+                {{ $upload->attendees->count() }} Attendees
+            </span>
 
-                    MobileUploadAttendee::create([
-                        'mobile_upload_id' => $upload->id,
-                        'name'             => $name,
-                        'gender'           => strtoupper($gender)
-                    ]);
+        </div>
 
-                }
-            }
 
-            // MIT App checks for this exact text
-            return response("UPLOAD_SUCCESS", 200)
-                ->header("Content-Type", "text/plain");
 
-        } catch (\Exception $e) {
+        <!-- Attendees Table -->
+        <div class="overflow-x-auto">
 
-            return response(
-                "ERROR: " . $e->getMessage(),
-                500
-            )->header("Content-Type", "text/plain");
-        }
-    }
-}
+            <table class="w-full border-collapse">
+
+                <thead>
+
+                    <tr class="bg-gray-200 text-gray-700">
+
+                        <th class="px-4 py-3 text-left rounded-tl-lg">
+                            #
+                        </th>
+
+                        <th class="px-4 py-3 text-left">
+                            Name
+                        </th>
+
+                        <th class="px-4 py-3 text-left rounded-tr-lg">
+                            Gender
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                @foreach($upload->attendees as $index => $attendee)
+
+                    <tr class="border-b hover:bg-gray-50 transition">
+
+                        <td class="px-4 py-3">
+                            {{ $index + 1 }}
+                        </td>
+
+                        <td class="px-4 py-3 font-medium text-gray-800">
+                            {{ $attendee->name }}
+                        </td>
+
+                        <td class="px-4 py-3">
+
+                            @if(strtoupper($attendee->gender) == 'MALE')
+
+                                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    MALE
+                                </span>
+
+                            @else
+
+                                <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    FEMALE
+                                </span>
+
+                            @endif
+
+                        </td>
+
+                    </tr>
+
+                @endforeach
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+    @empty
+
+    <div class="bg-white rounded-xl shadow p-8 text-center text-gray-500">
+
+        No mobile uploads yet.
+
+    </div>
+
+    @endforelse
+
+
+</div>
+
+
+</body>
+</html>
