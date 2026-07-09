@@ -17,43 +17,47 @@ class MobileUploadController extends Controller
         return view('mobile_uploads', compact('uploads'));
     }
 
-    public function upload(Request $request)
+   public function upload(Request $request)
 {
     try {
 
-        // Receive data from MIT
-        $title   = $request->input('title');
+        $title = $request->input('title');
         $content = $request->input('content');
-        $author  = $request->input('author', 'Anonymous');
+        $author = $request->input('author', 'Anonymous');
 
-        // Create one upload record
+        if (empty($title) || empty($content)) {
+            return response("ERROR: Missing title or content", 400)
+                ->header("Content-Type", "text/plain");
+        }
+
+        // Create the upload record
         $upload = MobileUpload::create([
             'table_name' => $title,
-            'author'     => $author
+            'author' => $author
         ]);
 
-        // Split the uploaded text into lines
-        $lines = explode("\n", $content);
+        // Split each attendee
+        $lines = preg_split("/\r\n|\n|\r/", $content);
 
         foreach ($lines as $line) {
 
-            $currentLine = trim($line);
+            $line = trim($line);
 
-            if ($currentLine == "") {
+            if ($line == "") {
                 continue;
             }
 
-            $parts = explode("/", $currentLine);
+            $parts = explode("/", $line);
 
-            $name   = isset($parts[0]) ? trim($parts[0]) : "";
-            $gender = isset($parts[1]) ? trim($parts[1]) : "";
+            $name = trim($parts[0] ?? "");
+            $gender = trim($parts[1] ?? "");
 
             if ($name != "") {
 
                 MobileUploadAttendee::create([
                     'mobile_upload_id' => $upload->id,
-                    'name'             => $name,
-                    'gender'           => $gender
+                    'name' => $name,
+                    'gender' => $gender
                 ]);
 
             }
