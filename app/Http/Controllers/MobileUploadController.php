@@ -18,32 +18,58 @@ class MobileUploadController extends Controller
     }
 
     public function upload(Request $request)
-    {
-        // 1. Validates table_name, attendees list array, and the author metadata
-        $request->validate([
-            'table_name' => 'required|string',
-            'attendees'  => 'required|array',
-            'author'     => 'nullable|string' // 👈 Added author validation line
-        ]);
+{
+    try {
 
-        // 2. Creates the parent table entry with the author tracking tag
+        // Receive data from MIT
+        $title   = $request->input('title');
+        $content = $request->input('content');
+        $author  = $request->input('author', 'Anonymous');
+
+        // Create one upload record
         $upload = MobileUpload::create([
-            'table_name' => $request->table_name,
-            'author'     => $request->author ?? 'Anonymous' // 👈 Saves the author name
+            'table_name' => $title,
+            'author'     => $author
         ]);
 
-        // 3. Loops through each attendee data pair element
-        foreach($request->attendees as $person)
-        {
-            MobileUploadAttendee::create([
-                'mobile_upload_id' => $upload->id,
-                'name'             => $person['name'],
-                'gender'           => $person['gender']
-            ]);
+        // Split the uploaded text into lines
+        $lines = explode("\n", $content);
+
+        foreach ($lines as $line) {
+
+            $currentLine = trim($line);
+
+            if ($currentLine == "") {
+                continue;
+            }
+
+            $parts = explode("/", $currentLine);
+
+            $name   = isset($parts[0]) ? trim($parts[0]) : "";
+            $gender = isset($parts[1]) ? trim($parts[1]) : "";
+
+            if ($name != "") {
+
+                MobileUploadAttendee::create([
+                    'mobile_upload_id' => $upload->id,
+                    'name'             => $name,
+                    'gender'           => $gender
+                ]);
+
+            }
+
         }
 
-        // 4. Returns plain text UPLOAD_SUCCESS so the phone app registers a clear success event!
-        return response('UPLOAD_SUCCESS', 200)
-            ->header('Content-Type', 'text/plain');
+        return response("UPLOAD_SUCCESS", 200)
+            ->header("Content-Type", "text/plain");
+
+    } catch (\Exception $e) {
+
+        return response(
+            "ERROR: " . $e->getMessage(),
+            500
+        )->header("Content-Type", "text/plain");
+
     }
+}
 }
