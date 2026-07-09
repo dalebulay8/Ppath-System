@@ -1,121 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <title>Mobile Uploads</title>
+namespace App\Http\Controllers;
 
-    <script src="https://cdn.tailwindcss.com"></script>
+use Illuminate\Http\Request;
+use App\Models\MobileUpload;
+use App\Models\MobileUploadAttendee;
 
-    <link rel="icon" href="/svg.png?v=3">
-</head>
+class MobileUploadController extends Controller
+{
 
+    public function index()
+    {
+        $uploads = MobileUpload::with('attendees')
+            ->orderBy('created_at','desc')
+            ->get();
 
-<body class="bg-gray-100">
 
+        return view(
+            'mobile_uploads',
+            compact('uploads')
+        );
+    }
 
-<div class="max-w-6xl mx-auto mt-10">
 
-    <div class="bg-white rounded-xl shadow-lg p-6">
 
+    public function upload(Request $request)
+    {
 
-        <h1 class="text-3xl font-bold mb-6">
-            Mobile Uploads
-        </h1>
+        $request->validate([
 
+            'table_name'=>'required|string',
 
+            'attendees'=>'required|array'
 
-        @if($uploads->count() == 0)
+        ]);
 
-            <p class="text-gray-500">
-                No uploaded attendance yet.
-            </p>
 
 
-        @else
+        $upload = MobileUpload::create([
 
+            'table_name'=>$request->table_name
 
-            @foreach($uploads as $upload)
+        ]);
 
 
-            <div class="mb-8">
 
+        foreach($request->attendees as $person)
+        {
 
-                <h2 class="text-xl font-bold mb-3">
-                    {{ $upload->table_name }}
-                </h2>
+            MobileUploadAttendee::create([
 
+                'mobile_upload_id'=>$upload->id,
 
+                'name'=>$person['name'],
 
-                <table class="w-full border">
+                'gender'=>$person['gender']
 
+            ]);
 
-                    <thead>
+        }
 
-                        <tr class="bg-gray-100">
 
-                            <th class="border p-3">
-                                Name
-                            </th>
 
+        return response()->json([
 
-                            <th class="border p-3">
-                                Gender
-                            </th>
+            'success'=>true,
 
+            'message'=>'Upload successful'
 
-                        </tr>
+        ]);
 
-                    </thead>
+    }
 
-
-
-                    <tbody>
-
-
-                    @foreach($upload->attendees as $person)
-
-
-                        <tr>
-
-
-                            <td class="border p-3">
-                                {{ $person->name }}
-                            </td>
-
-
-                            <td class="border p-3">
-                                {{ $person->gender }}
-                            </td>
-
-
-                        </tr>
-
-
-                    @endforeach
-
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
-            @endforeach
-
-
-        @endif
-
-
-
-    </div>
-
-</div>
-
-
-</body>
-
-</html>
+}
