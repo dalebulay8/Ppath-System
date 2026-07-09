@@ -15,8 +15,7 @@ public function index()
         ->orderBy('created_at','desc')
         ->get();
 
-
-    dd($uploads);
+    dd($uploads->toArray());
 }
 
 
