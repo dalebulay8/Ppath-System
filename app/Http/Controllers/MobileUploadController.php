@@ -8,38 +8,34 @@ use App\Models\MobileUpload;
 class MobileUploadController extends Controller
 {
 
-    // Display uploads page
+    // Show Mobile Uploads page
     public function index()
     {
-        $uploads = MobileUpload::orderBy('created_at','desc')->get();
+        $uploads = MobileUpload::orderBy('created_at', 'desc')->get();
 
         return view('mobile_uploads', compact('uploads'));
     }
 
 
-    // Receive MIT App upload
+    // Receive upload from MIT App Inventor
     public function upload(Request $request)
     {
 
         $request->validate([
-
-            'table_name'=>'required',
-
-            'attendees'=>'required|array'
-
+            'table_name' => 'required|string',
+            'attendees' => 'required|array'
         ]);
 
 
-        foreach($request->attendees as $person)
-        {
+        foreach ($request->attendees as $person) {
 
             MobileUpload::create([
 
-                'table_name'=>$request->table_name,
+                'table_name' => $request->table_name,
 
-                'name'=>$person['name'],
+                'name' => $person['name'],
 
-                'gender'=>$person['gender']
+                'gender' => $person['gender']
 
             ]);
 
@@ -48,9 +44,9 @@ class MobileUploadController extends Controller
 
         return response()->json([
 
-            'success'=>true,
+            'success' => true,
 
-            'message'=>'Upload successful'
+            'message' => 'Mobile upload saved successfully'
 
         ]);
 
