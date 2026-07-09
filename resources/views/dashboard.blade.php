@@ -45,39 +45,61 @@ table {
     border-collapse:collapse;
     background:white;
 }
-    .attendance-table {
-    table-layout: fixed;
+   .attendance-table {
+
     width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: auto;
+
 }
+
 
 
 .attendance-table th:nth-child(1),
-.attendance-table td:nth-child(1) {
-    width: 60px;
+.attendance-table td:nth-child(1){
+
+    width: 70px;
+
 }
+
 
 
 .attendance-table th:nth-child(2),
-.attendance-table td:nth-child(2) {
-    width: 350px;
+.attendance-table td:nth-child(2){
+
+    width: 300px;
+
+    min-width:300px;
+
+    max-width:500px;
+
+    white-space: nowrap;
+
 }
+
 
 
 .attendance-table th:nth-child(3),
-.attendance-table td:nth-child(3) {
-    width: 120px;
-}
+.attendance-table td:nth-child(3){
 
-
-
-.attendance-table td {
-
-    white-space: normal;
-    word-break: normal;
-    overflow-wrap: break-word;
+    width:120px;
 
 }
 
+
+
+.attendance-table td,
+.attendance-table th {
+
+    padding:12px;
+
+    border:1px solid #e5e7eb;
+
+    text-align:left;
+
+}
 
 th,td {
 
@@ -427,7 +449,7 @@ Female: {{ $female }}
 
 <!-- ATTENDANCE TABLE -->
 
-<table class="w-full border attendance-table table-fixed">
+<table class="w-full border attendance-table">
 
 <thead class="bg-gray-100">
 
@@ -1527,7 +1549,7 @@ ${count++}
 </td>
 
 
-<td class="border p-3">
+<td class="border p-3 whitespace-nowrap">
 ${att.name}
 </td>
 
