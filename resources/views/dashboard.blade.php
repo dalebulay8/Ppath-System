@@ -142,7 +142,19 @@
 </div>
 
         <div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
 
+    <a href="/dashboard"
+       class="text-white hover:text-gray-300 font-semibold">
+        Dashboard
+    </a>
+
+    <a href="/mobile-uploads"
+       class="text-white hover:text-gray-300 font-semibold">
+        Mobile Uploads
+    </a>
+
+</div>
             <div class="text-right">
                 <div class="text-xs uppercase text-white">
                     Logged In As
