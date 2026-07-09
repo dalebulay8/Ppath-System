@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +15,11 @@
 
     <div class="bg-white rounded-xl shadow-lg p-6">
 
-        <h1 class="text-3xl font-bold mb-4">
+        <h1 class="text-3xl font-bold">
             Mobile Uploads
         </h1>
 
-        <p class="text-gray-500">
+        <p class="mt-4 text-gray-500">
             No uploaded attendance yet.
         </p>
 
