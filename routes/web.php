@@ -235,3 +235,6 @@ use App\Http\Controllers\MobileUploadController;
 
 Route::get('/mobile-uploads',
 [MobileUploadController::class,'index']);
+
+Route::get('/mobile-uploads/delete/{id}', 
+[MobileUploadController::class,'delete']);
