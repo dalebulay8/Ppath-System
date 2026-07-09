@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mobile Uploads</title>
@@ -9,15 +10,19 @@
     <link rel="icon" href="/svg.png?v=3">
 </head>
 
+
 <body class="bg-gray-100">
+
 
 <div class="max-w-6xl mx-auto mt-10">
 
     <div class="bg-white rounded-xl shadow-lg p-6">
 
+
         <h1 class="text-3xl font-bold mb-6">
             Mobile Uploads
         </h1>
+
 
 
         @if($uploads->count() == 0)
@@ -30,60 +35,59 @@
         @else
 
 
-            <div class="overflow-x-auto">
+            @foreach($uploads as $upload)
 
-                <table class="w-full border-collapse">
+
+            <div class="mb-8">
+
+
+                <h2 class="text-xl font-bold mb-3">
+                    {{ $upload->table_name }}
+                </h2>
+
+
+
+                <table class="w-full border">
+
 
                     <thead>
 
                         <tr class="bg-gray-100">
 
-                            <th class="border p-3 text-left">
-                                Table Name
-                            </th>
-
-                            <th class="border p-3 text-left">
+                            <th class="border p-3">
                                 Name
                             </th>
 
-                            <th class="border p-3 text-left">
+
+                            <th class="border p-3">
                                 Gender
                             </th>
 
-                            <th class="border p-3 text-left">
-                                Uploaded At
-                            </th>
 
                         </tr>
 
                     </thead>
 
 
+
                     <tbody>
 
 
-                    @foreach($uploads as $upload)
+                    @foreach($upload->attendees as $person)
+
 
                         <tr>
 
+
                             <td class="border p-3">
-                                {{ $upload->table_name }}
+                                {{ $person->name }}
                             </td>
 
 
                             <td class="border p-3">
-                                {{ $upload->name }}
+                                {{ $person->gender }}
                             </td>
 
-
-                            <td class="border p-3">
-                                {{ $upload->gender }}
-                            </td>
-
-
-                            <td class="border p-3">
-                                {{ $upload->created_at }}
-                            </td>
 
                         </tr>
 
@@ -93,17 +97,25 @@
 
                     </tbody>
 
+
                 </table>
+
 
             </div>
 
 
+            @endforeach
+
+
         @endif
+
 
 
     </div>
 
 </div>
 
+
 </body>
+
 </html>
