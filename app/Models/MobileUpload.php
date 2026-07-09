@@ -15,7 +15,8 @@ class MobileUpload extends Model
     {
         return $this->hasMany(
             MobileUploadAttendee::class,
-            'mobile_upload_id'
+            'mobile_upload_id',
+            'id'
         );
     }
 }
