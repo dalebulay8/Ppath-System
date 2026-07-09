@@ -91,7 +91,6 @@ class MobileUploadController extends Controller
             }
 
 
-            // MIT App checks for this exact text
             return response("UPLOAD_SUCCESS", 200)
                 ->header("Content-Type", "text/plain");
 
@@ -107,5 +106,43 @@ class MobileUploadController extends Controller
 
         }
     }
+
+
+
+    /**
+     * Delete uploaded mobile attendance table.
+     */
+    public function delete($id)
+    {
+
+        try {
+
+            $upload = MobileUpload::findOrFail($id);
+
+
+            // Delete all attendees connected to this upload
+            MobileUploadAttendee::where('mobile_upload_id', $id)
+                ->delete();
+
+
+            // Delete the upload record
+            $upload->delete();
+
+
+            return redirect('/mobile-uploads')
+                ->with('success', 'Mobile upload deleted successfully.');
+
+
+        } catch (\Exception $e) {
+
+
+            return redirect('/mobile-uploads')
+                ->with('error', $e->getMessage());
+
+
+        }
+
+    }
+
 
 }
