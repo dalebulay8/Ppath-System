@@ -6,6 +6,7 @@
     <title>Mobile Uploads</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="/svg.png?v=3">
 </head>
 
@@ -100,6 +101,16 @@
                     </tbody>
                 </table>
             </div>
+              <br>
+
+            <a href="javascript:void(0)"
+               onclick="confirmDelete('/mobile-uploads/delete/{{ $upload->id }}')"
+               class="text-white px-4 py-2 text-sm rounded hover:bg-red-600"
+               style="background-color:#CB0000;">
+
+                Delete table
+
+            </a>
         </div>
         @endforeach
     </div>
@@ -216,6 +227,38 @@ function exportCSV(button)
     URL.revokeObjectURL(url);
 }
 </script>
+<script>
+    function confirmDelete(url) {
 
+    Swal.fire({
+
+        title: 'Delete Table?',
+
+        text: 'This action cannot be undone.',
+
+        icon: 'warning',
+
+        showCancelButton: true,
+
+        confirmButtonColor: '#CB0000',
+
+        cancelButtonText: 'Cancel',
+
+        confirmButtonText: 'Delete'
+
+    }).then((result)=>{
+
+
+        if(result.isConfirmed){
+
+            window.location.href = url;
+
+        }
+
+
+    });
+
+}
+</script>
 </body>
 </html>
