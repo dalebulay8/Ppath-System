@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MobileUpload extends Model
 {
-    protected $table = 'mobile_uploads';
-
     protected $fillable = [
-        'table_name',
-        'name',
-        'gender'
+        'table_name'
     ];
+
+
+    public function attendees()
+    {
+        return $this->hasMany(
+            MobileUploadAttendee::class
+        );
+    }
 }
