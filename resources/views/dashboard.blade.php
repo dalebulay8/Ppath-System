@@ -175,20 +175,21 @@
 
     
 </div>
-<div class="max-w-6xl mx-auto mt-6 flex justify-end px-4">
+<div class="max-w-6xl mx-auto mt-6 flex justify-end gap-3 px-4">
+
     <button onclick="addTable()"
-        class=" text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
-         style="background-color: #6F8DA6;">
+        class="text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+        style="background-color: #6F8DA6;">
         + New Table
     </button>
-      
-</div>
-    <div class="max-w-6xl mx-auto mt-6 flex justify-end px-4">
+
+
     <a href="/mobile-uploads"
        class="text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
        style="background-color: #6F8DA6;">
         Mobile Uploads
     </a>
+
 </div>
 <main>
    <div id="tablesContainer" class="space-y-8">
