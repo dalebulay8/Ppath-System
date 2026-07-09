@@ -146,10 +146,7 @@
 
  
 
-    <a href="/mobile-uploads"
-       class="text-white hover:text-gray-300 font-semibold">
-        Mobile Uploads
-    </a>
+   
 
 </div>
             <div class="text-right">
@@ -186,7 +183,12 @@
     </button>
       
 </div>
-    
+    <div class="max-w-6xl mx-auto mt-6 flex justify-end px-4">
+ <a href="/mobile-uploads"
+       class="text-white hover:text-gray-300 font-semibold">
+        Mobile Uploads
+    </a>
+        </div>
 <main>
    <div id="tablesContainer" class="space-y-8">
     
