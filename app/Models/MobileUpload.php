@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class MobileUpload extends Model
 {
     protected $fillable = [
-        'table_name'
+        'table_name',
+        'author'
     ];
 
 
