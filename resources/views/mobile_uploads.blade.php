@@ -41,9 +41,13 @@
             <div class="mb-8">
 
 
-                <h2 class="text-xl font-bold mb-3">
-                    {{ $upload->table_name }}
-                </h2>
+                <h2 class="text-xl font-bold mb-1">
+    {{ $upload->table_name }}
+</h2>
+
+<p class="text-gray-500 mb-3">
+    Uploaded by: {{ $upload->author }}
+</p>
 
 
 
