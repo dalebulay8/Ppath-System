@@ -230,3 +230,6 @@ Route::get('/attendance/live/{activity}', function ($activity) {
 ]);
 
 });
+Route::get('/mobile-uploads', function () {
+    return view('mobile_uploads');
+});
