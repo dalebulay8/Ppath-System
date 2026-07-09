@@ -45,6 +45,38 @@ table {
     border-collapse:collapse;
     background:white;
 }
+    .attendance-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+
+.attendance-table th:nth-child(1),
+.attendance-table td:nth-child(1) {
+    width: 60px;
+}
+
+
+.attendance-table th:nth-child(2),
+.attendance-table td:nth-child(2) {
+    width: 350px;
+}
+
+
+.attendance-table th:nth-child(3),
+.attendance-table td:nth-child(3) {
+    width: 120px;
+}
+
+
+
+.attendance-table td {
+
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+
+}
 
 
 th,td {
@@ -401,17 +433,17 @@ Female: {{ $female }}
 
 <tr>
 
-<th class="w-16 border p-3">
+<th class="border p-3">
 #
 </th>
 
 
-<th class="w-96 border p-3">
+<th class="border p-3">
 Name
 </th>
 
 
-<th class="w-32 border p-3">
+<th class="border p-3">
 Gender
 </th>
 
@@ -1490,11 +1522,20 @@ tbody.innerHTML += `
 
 <tr>
 
-<td>${count++}</td>
+<td class="border p-3">
+${count++}
+</td>
 
-<td>${att.name}</td>
 
-<td>${att.gender}</td>
+<td class="border p-3">
+${att.name}
+</td>
+
+
+<td class="border p-3">
+${att.gender}
+</td>
+
 
 </tr>
 
