@@ -10,17 +10,14 @@ class MobileUploadController extends Controller
 {
 
     public function index()
-    {
-        $uploads = MobileUpload::with('attendees')
-            ->orderBy('created_at','desc')
-            ->get();
+{
+    $uploads = MobileUpload::with('attendees')
+        ->orderBy('created_at','desc')
+        ->get();
 
 
-        return view(
-            'mobile_uploads',
-            compact('uploads')
-        );
-    }
+    return view('mobile_uploads', compact('uploads'));
+}
 
 
 
