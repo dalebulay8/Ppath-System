@@ -183,7 +183,27 @@ Route::get('/scanner', function () {
 
 });
 
+Route::get('/scanner-pin', function () {
 
+    return view('scanner_pin');
+
+});
+
+Route::post('/scanner-pin', function (Request $request) {
+
+    if ($request->pin === env('SCANNER_PIN')) {
+
+        session([
+            'scanner_authorized' => true
+        ]);
+
+        return redirect('/scanner');
+
+    }
+
+    return back()->with('error','Incorrect Scanner PIN.');
+
+});
 
 Route::post('/scanner/save', function (Request $request) {
 
