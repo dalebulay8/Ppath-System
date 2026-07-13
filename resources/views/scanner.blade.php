@@ -144,10 +144,26 @@
 
 <div class="container">
 
-    <div class="header">
+    <div class="header" style="display:flex;justify-content:space-between;align-items:center;">
+
+    <div>
         <h1>PPATH QR Scanner</h1>
         <p>Scan participant QR codes to record attendance.</p>
     </div>
+
+    <button onclick="logoutScanner()" style="
+        background:#dc3545;
+        padding:10px 18px;
+        border:none;
+        border-radius:8px;
+        color:white;
+        font-weight:600;
+        cursor:pointer;
+    ">
+        Logout
+    </button>
+
+</div>
 
     <div class="content">
 
