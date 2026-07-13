@@ -1162,7 +1162,7 @@ headerRow.eachCell(cell => {
     // BORDERS & ALIGNMENT
     // ==========================
 
-   worksheet.eachRow((row) => {
+  worksheet.eachRow((row) => {
 
     row.eachCell({ includeEmpty: true }, (cell) => {
 
@@ -1188,6 +1188,8 @@ headerRow.eachCell(cell => {
 
 
         cell.alignment = {
+
+            horizontal: "center",
 
             vertical: "middle",
 
