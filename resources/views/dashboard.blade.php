@@ -13,7 +13,8 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 
 </head>
@@ -989,167 +990,211 @@ window.location.reload();
 // ================================
 
 
-function exportExcel(button){
+// ================================
+// EXPORT EXCEL
+// ================================
 
+async function exportExcel(button){
 
+    const card = button.closest('.bg-white');
+    const table = card.querySelector('table');
+    const stats = card.querySelector('.export-stats');
 
-const card =
-button.closest('.bg-white');
+    const title = stats.dataset.title || "PPATH Attendance";
+    const author = stats.dataset.author || "";
+    const total = stats.dataset.total || 0;
+    const male = stats.dataset.male || 0;
+    const female = stats.dataset.female || 0;
 
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Attendance");
 
+    // ==========================
+    // REPORT HEADER
+    // ==========================
 
-const table =
-card.querySelector('table');
+    worksheet.mergeCells("A1:C1");
+    worksheet.getCell("A1").value = "PPATH Attendance Report";
+   worksheet.getCell("A1").font = {
+    bold: true,
+    size: 18,
+    color: { argb: "FFFFFFFF" }
+};
 
+worksheet.getCell("A1").alignment = {
+    horizontal: "center",
+    vertical: "middle"
+};
 
+worksheet.getCell("A1").fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "2F4B63" }
+};
 
-const stats =
-card.querySelector('.export-stats');
+worksheet.getRow(1).height = 28;
 
+  let row = worksheet.addRow(["Activity", title]);
+row.getCell(1).font = { bold: true };
 
+row = worksheet.addRow(["Created By", author]);
+row.getCell(1).font = { bold: true };
+    worksheet.addRow([]);
 
+   let summary = worksheet.addRow(["Attendance Summary"]);
 
+summary.font = {
+    bold: true,
+    color: { argb: "FFFFFFFF" }
+};
 
-const title =
-stats.dataset.title || "PPATH Attendance";
+summary.getCell(1).fill = {
+    type: "pattern",
+    pattern: "solid",
+    fgColor: { argb: "6F8DA6" }
+};
 
+    worksheet.addRow(["Total", total]);
+    worksheet.addRow(["Male", male]);
+    worksheet.addRow(["Female", female]);
 
+    worksheet.addRow([]);
 
-const author =
-stats.dataset.author || "";
+    // ==========================
+    // ATTENDANCE TABLE
+    // ==========================
 
+    const rows = table.querySelectorAll("tr");
 
+    rows.forEach(row => {
 
-const total =
-stats.dataset.total || 0;
+        let rowData = [];
 
+        row.querySelectorAll("th, td").forEach(cell => {
+            rowData.push(cell.innerText.trim());
+        });
 
+        worksheet.addRow(rowData);
 
-const male =
-stats.dataset.male || 0;
-
-
-
-const female =
-stats.dataset.female || 0;
-
-
-
-
-
-
-let data=[];
-
-
-
-data.push(["PPATH Attendance Report"]);
-data.push([`Activity: ${title}`]);
-data.push([`Created By: ${author}`]);
-data.push([]);
-
-data.push(["Attendance Summary"]);
-data.push([`Total: ${total}`]);
-data.push([`Male: ${male}`]);
-data.push([`Female: ${female}`]);
-data.push([]);
-
-
-
-
-
-
-
-const rows =
-table.querySelectorAll("tr");
-
-
-
-
-rows.forEach(row=>{
-
-
-let rowData=[];
-
-
-
-row.querySelectorAll("th,td")
-
-.forEach(cell=>{
-
-
-rowData.push(
-
-cell.innerText.trim()
-
-);
-
-
-});
-
-
-
-data.push(rowData);
-
-
-
-});
-
-
-
-
-
-
-
-const worksheet = XLSX.utils.aoa_to_sheet(data);
-
-// --- ADD THIS PIECE OF CODE TO AUTO-FIT COLUMNS ---
-const maxCols = data.reduce((max, row) => Math.max(max, row.length), 0);
-const colWidths = [];
-
-for (let i = 0; i < maxCols; i++) {
-    let maxLength = 10; // set a base minimum width
-    data.forEach(row => {
-        if (row[i] !== undefined && row[i] !== null) {
-            const cellLength = row[i].toString().length;
-            if (cellLength > maxLength) {
-                maxLength = cellLength;
-            }
-        }
     });
-    // Add a little padding (e.g., +3 characters) so text isn't flush with the border
-    colWidths.push({ wch: maxLength + 3 }); 
+
+    // ==========================
+    // STYLE HEADER ROW
+    // ==========================
+
+    const headerRowNumber = 10;
+
+   const headerRow = worksheet.getRow(headerRowNumber);
+
+headerRow.font = {
+    bold: true,
+    color: { argb: "FFFFFFFF" }
+};
+
+headerRow.alignment = {
+    horizontal: "center",
+    vertical: "middle"
+};
+
+headerRow.eachCell(cell => {
+
+    cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: { argb: "2F4B63" }
+    };
+
+});
+
+    // ==========================
+    // BORDERS & ALIGNMENT
+    // ==========================
+
+    worksheet.eachRow((row) => {
+
+        row.eachCell((cell) => {
+
+            cell.border = {
+                top: { style: "thin" },
+                left: { style: "thin" },
+                bottom: { style: "thin" },
+                right: { style: "thin" }
+            };
+
+            cell.alignment = {
+                vertical: "middle",
+                wrapText: true
+            };
+if (row.number > headerRowNumber && row.number % 2 === 0) {
+
+    cell.fill = {
+        type: "pattern",
+        pattern: "solid",
+        fgColor: {
+            argb: "F3F4F6"
+        }
+    };
+
 }
+        });
 
-worksheet['!cols'] = colWidths;
-// --------------------------------------------------
+    });
 
-const workbook = XLSX.utils.book_new();
+    // ==========================
+    // AUTO SIZE COLUMNS
+    // ==========================
 
+    worksheet.columns.forEach(column => {
 
+        let maxLength = 10;
 
+        column.eachCell({ includeEmpty: true }, cell => {
 
-XLSX.utils.book_append_sheet(
+            const length = cell.value
+                ? cell.value.toString().length
+                : 0;
 
-workbook,
+            if (length > maxLength) {
+                maxLength = length;
+            }
 
-worksheet,
+        });
 
-"Attendance"
+        column.width = maxLength + 3;
 
-);
+    });
 
+    // ==========================
+    // DOWNLOAD
+    // ==========================
 
+    const buffer = await workbook.xlsx.writeBuffer();
+    worksheet.pageSetup = {
 
+    orientation: "landscape",
 
-XLSX.writeFile(
+    fitToPage: true,
 
-workbook,
+    fitToWidth: 1,
 
-title+"_Attendance_Report.xlsx"
+    fitToHeight: 0
 
-);
-
-
+};
+worksheet.views = [
+    {
+        state: "frozen",
+        ySplit: headerRowNumber
+    }
+];
+    saveAs(
+        new Blob(
+            [buffer],
+            {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            }
+        ),
+        title + "_Attendance_Report.xlsx"
+    );
 
 }
 
