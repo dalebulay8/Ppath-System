@@ -446,7 +446,7 @@ data-female="{{ $female }}">
         class="flex items-center gap-2 px-4 py-2 rounded-lg text-white"
         style="background-color:#2F4B63;">
 
-        <span class="arrow transition-transform duration-300">▶</span>
+        <span class="arrow transition-transform duration-300">▾</span>
         <span>View Attendance List</span>
 
     </button>
