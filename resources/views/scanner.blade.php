@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPATH QR Scanner</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -297,11 +298,22 @@ function resetScanner() {
 <script>
     function logoutScanner() {
 
-    if(confirm("Are you sure you want to logout from the scanner?")){
+    Swal.fire({
+        title: 'Logout Scanner?',
+        text: 'You will need to enter the scanner PIN again to continue.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#1f4e79',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Logout',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
 
-        window.location.href = "/scanner/logout";
+        if (result.isConfirmed) {
+            window.location.href = "/scanner/logout";
+        }
 
-    }
+    });
 
 }
 </script>
