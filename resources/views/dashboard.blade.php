@@ -1059,7 +1059,7 @@ row.getCell(1).font = {
 };
 
 worksheet.mergeCells(`B${row.number}:C${row.number}`);
-    worksheet.addRow([]);
+
 
    let summary = worksheet.addRow([
     "Attendance Summary",
@@ -1082,24 +1082,34 @@ summary.getCell(1).fill = {
     fgColor: { argb: "6F8DA6" }
 };
 
- worksheet.addRow([
+ let totalRow = worksheet.addRow([
     "Total",
     total,
     ""
 ]);
 
-worksheet.addRow([
+worksheet.mergeCells(`B${totalRow.number}:C${totalRow.number}`);
+
+
+
+let maleRow = worksheet.addRow([
     "Male",
     male,
     ""
 ]);
 
-worksheet.addRow([
+worksheet.mergeCells(`B${maleRow.number}:C${maleRow.number}`);
+
+
+
+let femaleRow = worksheet.addRow([
     "Female",
     female,
     ""
 ]);
-    worksheet.addRow([]);
+
+worksheet.mergeCells(`B${femaleRow.number}:C${femaleRow.number}`);
+ 
 
     // ==========================
     // ATTENDANCE TABLE
