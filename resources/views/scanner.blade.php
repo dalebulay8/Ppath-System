@@ -160,7 +160,7 @@
         font-weight:600;
         cursor:pointer;
     ">
-        Logout
+        Exit Scanner
     </button>
 
 </div>
@@ -294,6 +294,16 @@ function resetScanner() {
 }
 
 </script>
+<script>
+    function logoutScanner() {
 
+    if(confirm("Are you sure you want to logout from the scanner?")){
+
+        window.location.href = "/scanner/logout";
+
+    }
+
+}
+</script>
 </body>
 </html>
