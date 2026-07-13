@@ -419,27 +419,16 @@ data-female="{{ $female }}"
 
 
 
-<div class="bg-blue-50 p-4 rounded">
-
-Total: {{ $total }}
-
+<div class="bg-blue-50 p-4 rounded" id="total-{{ $activity->id }}">
+    Total: {{ $total }}
 </div>
 
-
-
-<div class="bg-green-50 p-4 rounded">
-
-Male: {{ $male }}
-
+<div class="bg-green-50 p-4 rounded" id="male-{{ $activity->id }}">
+    Male: {{ $male }}
 </div>
 
-
-
-
-<div class="bg-purple-50 p-4 rounded">
-
-Female: {{ $female }}
-
+<div class="bg-purple-50 p-4 rounded" id="female-{{ $activity->id }}">
+    Female: {{ $female }}
 </div>
 
 
@@ -449,107 +438,61 @@ Female: {{ $female }}
 
 <!-- ATTENDANCE TABLE -->
 
-<table class="w-full border attendance-table">
+<!-- ATTENDANCE DROPDOWN -->
 
-<thead class="bg-gray-100">
+<div class="mt-4">
+    <button
+        onclick="toggleAttendance(this)"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-white"
+        style="background-color:#2F4B63;">
 
-<tr>
+        <span class="arrow transition-transform duration-300">▶</span>
+        <span>View Attendance List</span>
 
-<th class="border p-3">
-#
-</th>
+    </button>
+</div>
 
+<div class="attendance-content hidden mt-4 overflow-x-auto">
 
-<th class="border p-3">
-Name
-</th>
+    <table class="w-full border attendance-table">
 
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="border p-3">#</th>
+                <th class="border p-3">Name</th>
+                <th class="border p-3">Gender</th>
+            </tr>
+        </thead>
 
-<th class="border p-3">
-Gender
-</th>
+        <tbody id="attendance-{{ $activity->id }}">
 
+            @php $count = 1; @endphp
 
-</tr>
+            @forelse($attendees->where('activity_id',$activity->id) as $attendee)
 
-</thead>
+            <tr>
+                <td>{{ $count++ }}</td>
+                <td class="border p-3 break-words">
+                    {{ $attendee->name }}
+                </td>
+                <td>{{ $attendee->gender }}</td>
+            </tr>
 
+            @empty
 
+            <tr>
+                <td colspan="3" class="text-center text-gray-400">
+                    No attendees yet
+                </td>
+            </tr>
 
-<tbody id="attendance-{{ $activity->id }}">
+            @endforelse
 
+        </tbody>
 
-@php
+    </table>
 
-$count = 1;
-
-@endphp
-
-
-
-
-@forelse($attendees->where('activity_id',$activity->id) as $attendee)
-
-
-
-<tr>
-
-
-<td>
-
-{{ $count++ }}
-
-</td>
-
-
-
-<td class="border p-3 break-words">
-    {{ $attendee->name }}
-</td>
-
-
-
-<td>
-
-{{ $attendee->gender }}
-
-</td>
-
-
-
-</tr>
-
-
-
-
-@empty
-
-
-
-<tr>
-
-
-<td colspan="3" class="text-center text-gray-400">
-
-No attendees yet
-
-</td>
-
-
-</tr>
-
-
-
-@endforelse
-
-
-
-</tbody>
-
-
-</table>
-
-
+</div>
 
 
 
@@ -1720,7 +1663,26 @@ initLiveUpdate,
 
 
 </script>
+<script>
+    function toggleAttendance(button)
+{
+    const content = button.parentElement.nextElementSibling;
+    const arrow = button.querySelector(".arrow");
 
+    content.classList.toggle("hidden");
+
+    if (content.classList.contains("hidden"))
+    {
+        arrow.style.transform = "rotate(0deg)";
+        button.querySelector("span:last-child").textContent = "View Attendance List";
+    }
+    else
+    {
+        arrow.style.transform = "rotate(90deg)";
+        button.querySelector("span:last-child").textContent = "Hide Attendance List";
+    }
+}
+</script>
 
 </body>
 
