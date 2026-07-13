@@ -156,17 +156,16 @@ function exportExcel(button)
     let data = [];
 
     // REPORT HEADER
-    data.push(["PPATH Mobile Attendance Report"]);
-    data.push(["Activity", title]);
-    data.push(["Uploaded By", author]);
-    data.push([]);
+   data.push(["PPATH Mobile Attendance Report"]);
+data.push([`Activity: ${title}`]);
+data.push([`Uploaded By: ${author}`]);
+data.push([]);
 
-    // SUMMARY
-    data.push(["Attendance Summary"]);
-    data.push(["Total", total]);
-    data.push(["Male", male]);
-    data.push(["Female", female]);
-    data.push([]);
+data.push(["Attendance Summary"]);
+data.push([`Total: ${total}`]);
+data.push([`Male: ${male}`]);
+data.push([`Female: ${female}`]);
+data.push([]);
 
     // ATTENDEE TABLE
     const rows = table.querySelectorAll("tr");
