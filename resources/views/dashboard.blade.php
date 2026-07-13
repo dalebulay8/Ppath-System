@@ -1109,7 +1109,8 @@ let femaleRow = worksheet.addRow([
 ]);
 
 worksheet.mergeCells(`B${femaleRow.number}:C${femaleRow.number}`);
- 
+ worksheet.addRow([]);
+    
 
     // ==========================
     // ATTENDANCE TABLE
