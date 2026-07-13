@@ -1034,14 +1034,42 @@ worksheet.getCell("A1").fill = {
 
 worksheet.getRow(1).height = 28;
 
-  let row = worksheet.addRow(["Activity", title]);
-row.getCell(1).font = { bold: true };
+let row = worksheet.addRow([
+    "Activity",
+    title,
+    ""
+]);
 
-row = worksheet.addRow(["Created By", author]);
-row.getCell(1).font = { bold: true };
+row.getCell(1).font = {
+    bold:true
+};
+
+worksheet.mergeCells(`B${row.number}:C${row.number}`);
+
+
+
+row = worksheet.addRow([
+    "Created By",
+    author,
+    ""
+]);
+
+row.getCell(1).font = {
+    bold:true
+};
+
+worksheet.mergeCells(`B${row.number}:C${row.number}`);
     worksheet.addRow([]);
 
-   let summary = worksheet.addRow(["Attendance Summary"]);
+   let summary = worksheet.addRow([
+    "Attendance Summary",
+    "",
+    ""
+]);
+
+worksheet.mergeCells(
+    `A${summary.number}:C${summary.number}`
+);
 
 summary.font = {
     bold: true,
@@ -1054,10 +1082,23 @@ summary.getCell(1).fill = {
     fgColor: { argb: "6F8DA6" }
 };
 
-    worksheet.addRow(["Total", total]);
-    worksheet.addRow(["Male", male]);
-    worksheet.addRow(["Female", female]);
+ worksheet.addRow([
+    "Total",
+    total,
+    ""
+]);
 
+worksheet.addRow([
+    "Male",
+    male,
+    ""
+]);
+
+worksheet.addRow([
+    "Female",
+    female,
+    ""
+]);
     worksheet.addRow([]);
 
     // ==========================
