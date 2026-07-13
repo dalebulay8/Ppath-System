@@ -1110,35 +1110,61 @@ headerRow.eachCell(cell => {
     // BORDERS & ALIGNMENT
     // ==========================
 
-    worksheet.eachRow((row) => {
+   worksheet.eachRow((row) => {
 
-        row.eachCell((cell) => {
+    row.eachCell({ includeEmpty: true }, (cell) => {
 
-            cell.border = {
-                top: { style: "thin" },
-                left: { style: "thin" },
-                bottom: { style: "thin" },
-                right: { style: "thin" }
-            };
+        cell.border = {
 
-            cell.alignment = {
-                vertical: "middle",
-                wrapText: true
-            };
-if (row.number > headerRowNumber && row.number % 2 === 0) {
+            top: {
+                style: "thin"
+            },
 
-    cell.fill = {
-        type: "pattern",
-        pattern: "solid",
-        fgColor: {
-            argb: "F3F4F6"
-        }
-    };
+            left: {
+                style: "thin"
+            },
 
-}
-        });
+            bottom: {
+                style: "thin"
+            },
+
+            right: {
+                style: "thin"
+            }
+
+        };
+
+
+        cell.alignment = {
+
+            vertical: "middle",
+
+            wrapText: true
+
+        };
+
 
     });
+
+});
+    <script>
+        for(let row = 1; row <= worksheet.rowCount; row++){
+
+    for(let col = 1; col <= 3; col++){
+
+        worksheet.getCell(row,col).border = {
+
+            top:{style:"thin"},
+            left:{style:"thin"},
+            bottom:{style:"thin"},
+            right:{style:"thin"}
+
+        };
+
+    }
+
+}
+        </script>
 
     // ==========================
     // AUTO SIZE COLUMNS
