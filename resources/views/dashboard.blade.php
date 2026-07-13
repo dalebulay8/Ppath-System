@@ -1663,7 +1663,7 @@ initLiveUpdate,
 
 </script>
 <script>
-    function toggleAttendance(button)
+   function toggleAttendance(button)
 {
     const content = button.parentElement.nextElementSibling;
     const arrow = button.querySelector(".arrow");
@@ -1673,12 +1673,10 @@ initLiveUpdate,
     if (content.classList.contains("hidden"))
     {
         arrow.style.transform = "rotate(0deg)";
-        button.querySelector("span:last-child").textContent = "View Attendance List";
     }
     else
     {
         arrow.style.transform = "rotate(90deg)";
-        button.querySelector("span:last-child").textContent = "Hide Attendance List";
     }
 }
 </script>
