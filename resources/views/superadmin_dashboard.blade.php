@@ -104,7 +104,7 @@
 
          <a href="/logout"
    class="text-white px-4 py-2 rounded font-bold"
-   style="background-color: #2F4B63;">
+   style="background-color: #FF2400;">
     Logout
 </a>
         </div>
@@ -191,7 +191,7 @@
         <!-- REJECT -->
         <a href="/admin-reject/{{ $admin->id }}"
            class=" text-white px-3 py-1 rounded"
-           style="background-color: #CB0000;">
+           style="background-color: #FF2400;">
             Reject
         </a>
 
@@ -258,7 +258,7 @@
 
     <a href="javascript:void(0)"
        class="text-white px-3 py-1 rounded"
-       style="background-color:#CB0000;"
+       style="background-color:#FF2400;"
        onclick="confirmDeleteAdmin('/delete-admin/{{ $admin->id }}')">
         Delete
     </a>
