@@ -1678,7 +1678,38 @@ initLiveUpdate,
 }
 </script>
  <script>
-        for(let row = 1; row <= worksheet.rowCount; row++){
+        // ADD COMPLETE BORDERS
+
+worksheet.eachRow({ includeEmpty: true }, function(row){
+
+    row.eachCell({ includeEmpty: true }, function(cell){
+
+        cell.border = {
+
+            top:{
+                style:"thin"
+            },
+
+            left:{
+                style:"thin"
+            },
+
+            bottom:{
+                style:"thin"
+            },
+
+            right:{
+                style:"thin"
+            }
+
+        };
+
+    });
+
+});
+     // FORCE TABLE AREA BORDER
+
+for(let row = 10; row <= worksheet.rowCount; row++){
 
     for(let col = 1; col <= 3; col++){
 
