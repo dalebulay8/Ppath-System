@@ -1147,24 +1147,7 @@ headerRow.eachCell(cell => {
     });
 
 });
-    <script>
-        for(let row = 1; row <= worksheet.rowCount; row++){
-
-    for(let col = 1; col <= 3; col++){
-
-        worksheet.getCell(row,col).border = {
-
-            top:{style:"thin"},
-            left:{style:"thin"},
-            bottom:{style:"thin"},
-            right:{style:"thin"}
-
-        };
-
-    }
-
-}
-        </script>
+   
 
     // ==========================
     // AUTO SIZE COLUMNS
@@ -1694,7 +1677,24 @@ initLiveUpdate,
     }
 }
 </script>
+ <script>
+        for(let row = 1; row <= worksheet.rowCount; row++){
 
+    for(let col = 1; col <= 3; col++){
+
+        worksheet.getCell(row,col).border = {
+
+            top:{style:"thin"},
+            left:{style:"thin"},
+            bottom:{style:"thin"},
+            right:{style:"thin"}
+
+        };
+
+    }
+
+}
+        </script>
 </body>
 
 </html>
