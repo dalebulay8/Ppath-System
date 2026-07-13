@@ -445,7 +445,11 @@ data-female="{{ $female }}">
     onclick="toggleAttendance(this)"
     class="flex items-center gap-2 text-gray-700 hover:text-black transition">
 
-    <span class="arrow transition-transform duration-300">▶</span>
+    <span class="arrow transition-transform duration-300 inline-block">
+    <svg class="w-3 h-3 fill-current text-black" viewBox="0 0 20 20">
+        <path d="M7 5l6 5-6 5V5z"/>
+    </svg>
+</span>
     <span>Attendance List</span>
 
 </button>
