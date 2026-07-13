@@ -153,7 +153,7 @@
     </div>
 
     <button onclick="logoutScanner()" style="
-        background:#dc3545;
+        background:#FF2400;
         padding:10px 18px;
         border:none;
         border-radius:8px;
@@ -299,13 +299,13 @@ function resetScanner() {
     function logoutScanner() {
 
     Swal.fire({
-        title: 'Logout Scanner?',
+        title: 'Exit Scanner?',
         text: 'You will need to enter the scanner PIN again to continue.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#1f4e79',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Logout',
+        confirmButtonText: 'Yes, Exit',
         cancelButtonText: 'Cancel'
     }).then((result) => {
 
