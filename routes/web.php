@@ -213,6 +213,15 @@ Route::post('/scanner-pin', function (Request $request) {
 
 Route::post('/scanner/save', function (Request $request) {
 
+
+    if (!session('scanner_authorized')) {
+
+    return response()->json([
+        'success' => false,
+        'message' => 'Unauthorized.'
+    ],403);
+
+}
     try {
 
         DB::table('attendees')->insert([
