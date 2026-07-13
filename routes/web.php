@@ -251,6 +251,13 @@ Route::post('/scanner/save', function (Request $request) {
 
 });
 
+Route::get('/scanner/logout', function () {
+
+    session()->forget('scanner_authorized');
+
+    return redirect('/scanner-pin');
+
+});
 Route::get('/attendance/live/{activity}', function ($activity) {
 
     $attendees = DB::table('attendees')
