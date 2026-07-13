@@ -25,8 +25,8 @@
 
 <main class="max-w-6xl mx-auto mt-6 px-4">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Mobile Uploads</h1>
-        <p class="text-gray-500 mt-1">Attendance records uploaded from mobile application</p>
+        <h1 class="text-3xl font-bold text-gray-900">MUploads</h1>
+        <p class="text-gray-500 mt-1">Attendance records uploaded from mobile</p>
     </div>
 
     @if($uploads->count() == 0)
