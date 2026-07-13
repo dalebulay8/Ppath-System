@@ -441,15 +441,14 @@ data-female="{{ $female }}">
 <!-- ATTENDANCE DROPDOWN -->
 
 <div class="mt-4">
-    <button
-        onclick="toggleAttendance(this)"
-        class="flex items-center gap-2 px-4 py-2 rounded-lg text-white"
-        style="background-color:#2F4B63;">
+   <button
+    onclick="toggleAttendance(this)"
+    class="flex items-center gap-2 text-gray-700 hover:text-black transition">
 
-        <span class="arrow transition-transform duration-300">▾</span>
-        <span>View Attendance List</span>
+    <span class="arrow transition-transform duration-300">▸</span>
+    <span>Attendance List</span>
 
-    </button>
+</button>
 </div>
 
 <div class="attendance-content hidden mt-4 overflow-x-auto">
