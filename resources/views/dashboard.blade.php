@@ -445,7 +445,7 @@ data-female="{{ $female }}">
     onclick="toggleAttendance(this)"
     class="flex items-center gap-2 text-gray-700 hover:text-black transition">
 
-    <span class="arrow transition-transform duration-300">▸</span>
+    <span class="arrow transition-transform duration-300">▼</span>
     <span>Attendance List</span>
 
 </button>
