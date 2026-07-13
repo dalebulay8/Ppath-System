@@ -1042,76 +1042,15 @@ let data=[];
 
 
 
-data.push([
-
-"PPATH Attendance Report"
-
-]);
-
-
-
-data.push([
-
-"Activity",
-
-title
-
-]);
-
-
-
-data.push([
-
-"Created By",
-
-author
-
-]);
-
-
-
+data.push(["PPATH Attendance Report"]);
+data.push([`Activity: ${title}`]);
+data.push([`Created By: ${author}`]);
 data.push([]);
 
-
-
-data.push([
-
-"Attendance Summary"
-
-]);
-
-
-
-data.push([
-
-"Total",
-
-total
-
-]);
-
-
-
-data.push([
-
-"Male",
-
-male
-
-]);
-
-
-
-data.push([
-
-"Female",
-
-female
-
-]);
-
-
-
+data.push(["Attendance Summary"]);
+data.push([`Total: ${total}`]);
+data.push([`Male: ${male}`]);
+data.push([`Female: ${female}`]);
 data.push([]);
 
 
