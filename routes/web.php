@@ -175,9 +175,15 @@ Route::post('/update-admin', [AuthController::class, 'updateAdmin'])
 
 Route::get('/scanner', function () {
 
+    if (!session('scanner_authorized')) {
+
+        return redirect('/scanner-pin');
+
+    }
+
     $activities = DB::table('activities')
-                    ->latest()
-                    ->get();
+        ->latest()
+        ->get();
 
     return view('scanner', compact('activities'));
 
