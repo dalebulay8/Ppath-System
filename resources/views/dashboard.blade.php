@@ -411,30 +411,28 @@ data-total="{{ $total }}"
 
 data-male="{{ $male }}"
 
-data-female="{{ $female }}"
+data-female="{{ $female }}">
 
->
+    <div class="bg-blue-50 p-4 rounded-lg">
+        <p class="text-gray-600">Total</p>
+        <p class="text-2xl font-bold text-blue-700">
+            {{ $total }}
+        </p>
+    </div>
 
+    <div class="bg-green-50 p-4 rounded-lg">
+        <p class="text-gray-600">Male</p>
+        <p class="text-2xl font-bold text-green-700">
+            {{ $male }}
+        </p>
+    </div>
 
-
-
-
- <div class="grid grid-cols-3 gap-4 mb-6">
-                <div class="bg-blue-50 p-4 rounded-lg">
-                    <p class="text-gray-600">Total</p>
-                    <p class="text-2xl font-bold text-blue-700">{{ $total }}</p>
-                </div>
-                <div class="bg-green-50 p-4 rounded-lg">
-                    <p class="text-gray-600">Male</p>
-                    <p class="text-2xl font-bold text-green-700">{{ $male }}</p>
-                </div>
-                <div class="bg-purple-50 p-4 rounded-lg">
-                    <p class="text-gray-600">Female</p>
-                    <p class="text-2xl font-bold text-purple-700">{{ $female }}</p>
-                </div>
-            </div>
-
-
+    <div class="bg-purple-50 p-4 rounded-lg">
+        <p class="text-gray-600">Female</p>
+        <p class="text-2xl font-bold text-purple-700">
+            {{ $female }}
+        </p>
+    </div>
 
 </div>
 
