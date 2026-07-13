@@ -76,31 +76,52 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full border attendance-table">
-                    <thead class="bg-gray-100">
-                        <tr>
-                            <th class="border p-3">#</th>
-                            <th class="border p-3">Name</th>
-                            <th class="border p-3">Gender</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php $count = 1; @endphp
-                        @forelse($upload->attendees as $person)
-                        <tr>
-                            <td class="border p-3">{{ $count++ }}</td>
-                            <td class="border p-3">{{ $person->name }}</td>
-                            <td class="border p-3">{{ $person->gender }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="3" class="text-center text-gray-400 p-6">No attendees yet</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
+        <!-- Dropdown Button -->
+<div class="mt-4">
+    <button
+        onclick="toggleAttendance(this)"
+        class="flex items-center gap-2 px-4 py-2 rounded-lg text-white"
+        style="background-color:#2F4B63;">
+
+        <span class="arrow transition-transform duration-300">▶</span>
+        <span>View Attendance List</span>
+
+    </button>
+</div>
+
+<!-- Hidden Attendance Table -->
+<div class="attendance-content hidden mt-4 overflow-x-auto">
+
+    <table class="w-full border attendance-table">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="border p-3">#</th>
+                <th class="border p-3">Name</th>
+                <th class="border p-3">Gender</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @php $count = 1; @endphp
+
+            @forelse($upload->attendees as $person)
+            <tr>
+                <td class="border p-3">{{ $count++ }}</td>
+                <td class="border p-3">{{ $person->name }}</td>
+                <td class="border p-3">{{ $person->gender }}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="3" class="text-center text-gray-400 p-6">
+                    No attendees yet
+                </td>
+            </tr>
+            @endforelse
+
+        </tbody>
+    </table>
+
+</div>
               <br>
 
             <a href="javascript:void(0)"
@@ -260,5 +281,23 @@ function exportCSV(button)
 
 }
 </script>
+    <script>
+        function toggleAttendance(button)
+{
+    const content = button.parentElement.nextElementSibling;
+    const arrow = button.querySelector(".arrow");
+
+    content.classList.toggle("hidden");
+
+    if(content.classList.contains("hidden"))
+    {
+        arrow.style.transform = "rotate(0deg)";
+    }
+    else
+    {
+        arrow.style.transform = "rotate(90deg)";
+    }
+}
+    </script>
 </body>
 </html>
