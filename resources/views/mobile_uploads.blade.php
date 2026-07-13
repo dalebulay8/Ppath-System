@@ -26,7 +26,7 @@
 
 <main class="max-w-6xl mx-auto mt-6 px-4">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">MUploads</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Uploads</h1>
         <p class="text-gray-500 mt-1">Attendance records uploaded from mobile</p>
     </div>
 
@@ -428,13 +428,15 @@ rows.forEach(row=>{
 };
 
 
-                cell.alignment = {
+               cell.alignment = {
 
-                    vertical:"middle",
+    horizontal:"center",
 
-                    wrapText:true
+    vertical:"middle",
 
-                };
+    wrapText:true
+
+};
 
 
             }
