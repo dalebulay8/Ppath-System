@@ -10,7 +10,9 @@
     body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #F8F6F0;
+    background: url('/1.jpg') no-repeat center center fixed;
+    background-size: cover;
+
     display: flex;
     justify-content: center;
     align-items: center;
