@@ -219,16 +219,31 @@ Route::post('/scanner-pin', function (Request $request) {
 
 Route::post('/scanner/save', function (Request $request) {
 
-
     if (!session('scanner_authorized')) {
 
-    return response()->json([
-        'success' => false,
-        'message' => 'Unauthorized.'
-    ],403);
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized.'
+        ], 403);
 
-}
+    }
+
     try {
+
+        // Check if this attendee is already scanned for this activity
+        $alreadyScanned = DB::table('attendees')
+            ->where('activity_id', $request->activity_id)
+            ->where('name', $request->name)
+            ->exists();
+
+        if ($alreadyScanned) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'This attendee has already been scanned.'
+            ]);
+
+        }
 
         DB::table('attendees')->insert([
 
