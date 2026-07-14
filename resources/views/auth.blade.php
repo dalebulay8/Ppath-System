@@ -10,14 +10,7 @@
     body {
     margin: 0;
     font-family: Arial, sans-serif;
-
-    /* Background Image */
-    background-image: url('/ppo11.jpg');
-   
-    background-position: center;   /* Center the image */
-    background-repeat: no-repeat;  /* Don't repeat */
-    background-attachment: fixed;  /* Optional: keeps image fixed while scrolling */
-
+    background: #001429;
     display: flex;
     justify-content: center;
     align-items: center;
