@@ -10,7 +10,7 @@
     body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('/1.png') no-repeat center center fixed;
+    background: url('/2.jpg') no-repeat center center fixed;
     background-size: cover;
 
     display: flex;
