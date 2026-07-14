@@ -10,7 +10,7 @@
     body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #2F4B63;
+    background: #F8F6F0;
     display: flex;
     justify-content: center;
     align-items: center;
