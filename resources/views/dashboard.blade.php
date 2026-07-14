@@ -416,23 +416,23 @@ data-female="{{ $female }}">
 
     <div class="bg-blue-50 p-4 rounded-lg">
         <p class="text-gray-600">Total</p>
-        <p class="text-2xl font-bold text-blue-700">
-            {{ $total }}
-        </p>
+        <p id="total-{{ $activity->id }}" class="text-2xl font-bold text-blue-700">
+    {{ $total }}
+</p>
     </div>
 
     <div class="bg-green-50 p-4 rounded-lg">
         <p class="text-gray-600">Male</p>
-        <p class="text-2xl font-bold text-green-700">
-            {{ $male }}
-        </p>
+        <p id="male-{{ $activity->id }}" class="text-2xl font-bold text-green-700">
+    {{ $male }}
+</p>
     </div>
 
     <div class="bg-purple-50 p-4 rounded-lg">
         <p class="text-gray-600">Female</p>
-        <p class="text-2xl font-bold text-purple-700">
-            {{ $female }}
-        </p>
+        <p id="female-{{ $activity->id }}" class="text-2xl font-bold text-purple-700">
+    {{ $female }}
+</p>
     </div>
 
 </div>
@@ -1631,24 +1631,17 @@ document.getElementById(`female-${activityId}`);
 
 
 
-if(totalBox)
+if (totalBox) {
+    totalBox.textContent = data.total;
+}
 
-totalBox.innerHTML =
-`Total: ${data.total}`;
+if (maleBox) {
+    maleBox.textContent = data.male;
+}
 
-
-
-if(maleBox)
-
-maleBox.innerHTML =
-`Male: ${data.male}`;
-
-
-
-if(femaleBox)
-
-femaleBox.innerHTML =
-`Female: ${data.female}`;
+if (femaleBox) {
+    femaleBox.textContent = data.female;
+}
 
 
 
