@@ -52,6 +52,12 @@ Route::get('/dashboard', function () {
 })->middleware('admin.auth');
 Route::get('/activities/delete/{id}', function ($id) {
 
+    // Delete all attendees belonging to this activity
+    DB::table('attendees')
+        ->where('activity_id', $id)
+        ->delete();
+
+    // Delete the activity
     DB::table('activities')
         ->where('id', $id)
         ->delete();
