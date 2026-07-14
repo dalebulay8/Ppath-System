@@ -12,7 +12,7 @@
     font-family: Arial, sans-serif;
 
     /* Background Image */
-    background-image: url('/ppo.jpg');
+    background-image: url('/ppo11.jpg');
     background-size: cover;        /* Fill the whole screen */
     background-position: center;   /* Center the image */
     background-repeat: no-repeat;  /* Don't repeat */
