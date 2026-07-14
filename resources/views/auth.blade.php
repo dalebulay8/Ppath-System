@@ -8,14 +8,21 @@
 
 <style>
     body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f3f4f6;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    /* Background Image */
+    background-image: url('/ppo.jpg');
+    background-size: cover;        /* Fill the whole screen */
+    background-position: center;   /* Center the image */
+    background-repeat: no-repeat;  /* Don't repeat */
+    background-attachment: fixed;  /* Optional: keeps image fixed while scrolling */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
     .auth-card {
         width: 380px;
