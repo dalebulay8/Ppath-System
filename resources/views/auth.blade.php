@@ -13,7 +13,7 @@
 
     /* Background Image */
     background-image: url('/ppo11.jpg');
-    background-size: cover;        /* Fill the whole screen */
+   
     background-position: center;   /* Center the image */
     background-repeat: no-repeat;  /* Don't repeat */
     background-attachment: fixed;  /* Optional: keeps image fixed while scrolling */
