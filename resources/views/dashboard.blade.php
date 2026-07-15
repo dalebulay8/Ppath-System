@@ -12,8 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
-<script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
@@ -181,7 +180,13 @@ Admin: {{ e(session('userName')) }}
 
 
 
-<a
+<a href="/logout"
+
+class="border border-red-500 text-red-500 px-5 py-2 rounded-lg hover:bg-red-50">
+
+Log Out
+
+</a><a
 id="logoutBtn"
 href="/logout"
 
@@ -226,9 +231,7 @@ Registered Attendees Matrix
 <div class="flex gap-3">
 
 
-<button
-id="newTableBtn"
-onclick="addTable()"
+<button onclick="addTable()"
 
 class="text-white px-4 py-2 rounded-lg"
 
@@ -1779,87 +1782,7 @@ for(let row = 10; row <= worksheet.rowCount; row++){
 
 }
         </script>
-    <script>
-function startDashboardTour() {
 
-    introJs().setOptions({
-
-        nextLabel: "Next ▶",
-        prevLabel: "◀ Previous",
-        doneLabel: "Finish Tour",
-        skipLabel: "Skip",
-
-        steps: [
-            {
-                title: "Welcome!",
-                intro: "Welcome to the PPATH Monitoring System. This short tour will show you the main features of the dashboard."
-            },
-            {
-                element: document.querySelector("#newTableBtn"),
-                title: "Create New Table",
-                intro: "Click here to create a new attendance table for an activity."
-            },
-            {
-                element: document.querySelector("#mobileUploadsBtn"),
-                title: "Mobile Uploads",
-                intro: "Open attendance records uploaded from the mobile application."
-            },
-            {
-                element: document.querySelector(".export-stats"),
-                title: "Attendance Summary",
-                intro: "This section displays the total, male, and female attendees."
-            },
-            {
-                element: document.querySelector(".attendance-content"),
-                title: "Attendance List",
-                intro: "Expand this section to view the list of attendees."
-            },
-            {
-                element: document.querySelector("#logoutBtn"),
-                title: "Log Out",
-                intro: "Click here to securely log out when you're finished using the system."
-            }
-
-        ]
-
-    }).start();
-
-}
-
-window.addEventListener("load", function () {
-
-    if (!localStorage.getItem("ppathDashboardTour")) {
-
-        Swal.fire({
-
-            title: "👋 Welcome to PPATH!",
-
-            text: "Would you like a quick tour of the system?",
-
-            icon: "info",
-
-            showCancelButton: true,
-
-            confirmButtonText: "Start Tour",
-
-            cancelButtonText: "Skip"
-
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-
-                startDashboardTour();
-
-            }
-
-            localStorage.setItem("ppathDashboardTour", "done");
-
-        });
-
-    }
-
-});
-</script>
 </body>
 
 </html>
