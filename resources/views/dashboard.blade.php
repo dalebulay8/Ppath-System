@@ -186,15 +186,8 @@ class="border border-red-500 text-red-500 px-5 py-2 rounded-lg hover:bg-red-50">
 
 Log Out
 
-</a><a
-id="logoutBtn"
-href="/logout"
-
-class="border border-red-500 text-red-500 px-5 py-2 rounded-lg hover:bg-red-50">
-
-Log Out
-
 </a>
+
 
 
 
