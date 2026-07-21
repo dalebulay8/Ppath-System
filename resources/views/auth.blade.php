@@ -7,11 +7,10 @@
 <link rel="icon" href="/svg.png?v=3">
 
 <style>
-    body {
+  body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('/1.png') no-repeat center center fixed;
-    background-size: cover;
+    background-color: #F8F6F0; /* Dirty white */
 
     display: flex;
     justify-content: center;
